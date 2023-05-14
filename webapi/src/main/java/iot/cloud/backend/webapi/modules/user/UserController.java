@@ -29,4 +29,6 @@ public class UserController {
     public ResResult<ResDtoGetUser> getUser() {
         return userInfoService.getUser();
     }
+
+    
 }
