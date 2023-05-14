@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>iot.cloud.backend</groupId>
+        <artifactId>all</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!-- 基本信息配置-->
+    <artifactId>common</artifactId>
+    <packaging>pom</packaging>
+    <name>iot-cloud-backend-common</name>
+    <url>https://yirancn.github.io</url>
+    <!-- 属性配置-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.dir>${basedir}/..</main.dir>
+    </properties>
+    <!-- 子模块配置-->
+    <modules>
+        <module>common-utils</module>
+        <module>common-base</module>
+    </modules>
+    <!-- 依赖配置-->
+    <dependencies>
+        <!-- 子模块依赖配置-->
+        
+        <!-- 三方依赖配置-->
+
+    </dependencies>
+</project>

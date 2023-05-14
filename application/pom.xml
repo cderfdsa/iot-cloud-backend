@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>iot.cloud.backend</groupId>
+        <artifactId>all</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!-- 基本信息配置-->
+    <artifactId>application</artifactId>
+    <packaging>jar</packaging>
+    <name>iot-cloud-backend-application</name>
+    <url>https://yirancn.github.io</url>
+    <!-- 属性配置-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.dir>${basedir}/..</main.dir>
+    </properties>
+    <!-- 依赖配置-->
+    <dependencies>
+        <!-- 子模块依赖配置-->
+        <dependency>
+            <groupId>iot.cloud.backend</groupId>
+            <artifactId>webapi</artifactId>
+        </dependency>
+        <!-- 三方依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+    </dependencies>
+    <!-- 构建配置-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

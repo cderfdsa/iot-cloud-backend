@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>iot.cloud.backend</groupId>
+        <artifactId>all</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <!-- 基本信息配置-->
+    <artifactId>common-utils</artifactId>
+    <packaging>jar</packaging>
+    <name>iot-cloud-backend-common-utils</name>
+    <url>https://yirancn.github.io</url>
+    <!-- 属性配置-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.dir>${basedir}/..</main.dir>
+    </properties>
+    <!-- 依赖配置-->
+    <dependencies>
+        <!-- 子模块依赖配置 无-->
+        <!-- 三方依赖配置-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>org-apache-commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
+</project>
