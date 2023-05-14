@@ -20,6 +20,8 @@ public class ResResult<T> {
     }
 
     public ResResult(Integer status, String msg) {
-        this.data = data;
+
+        this.status = status;
+        this.msg = msg;
     }
 }

@@ -3,30 +3,26 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>iot.cloud.backend</groupId>
-        <artifactId>all</artifactId>
+        <artifactId>common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <!-- 基本信息配置-->
-    <artifactId>common</artifactId>
-    <packaging>pom</packaging>
-    <name>iot-cloud-backend-common</name>
+    <artifactId>common-config</artifactId>
+    <packaging>jar</packaging>
+    <name>iot-cloud-backend-common-config</name>
     <url>https://yirancn.github.io</url>
     <!-- 属性配置-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.dir>${basedir}/..</main.dir>
+        <main.dir>${basedir}/../..</main.dir>
     </properties>
-    <!-- 子模块配置-->
-    <modules>
-        <module>common-utils</module>
-        <module>common-base</module>
-        <module>common-config</module>
-    </modules>
     <!-- 依赖配置-->
     <dependencies>
-        <!-- 子模块依赖配置-->
-
+        <!-- 子模块依赖配置 无-->
         <!-- 三方依赖配置-->
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

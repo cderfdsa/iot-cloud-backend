@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>iot.cloud.backend</groupId>
-        <artifactId>all</artifactId>
+        <artifactId>common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <!-- 基本信息配置-->
@@ -14,7 +14,7 @@
     <!-- 属性配置-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.dir>${basedir}/..</main.dir>
+        <main.dir>${basedir}/../..</main.dir>
     </properties>
     <!-- 依赖配置-->
     <dependencies>
@@ -35,6 +35,14 @@
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>org-apache-commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
         </dependency>
     </dependencies>
 </project>

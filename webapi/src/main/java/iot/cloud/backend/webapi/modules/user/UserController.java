@@ -1,6 +1,7 @@
 package iot.cloud.backend.webapi.modules.user;
 
 import iot.cloud.backend.service.dto.ReqDtoLogin;
+import iot.cloud.backend.service.dto.ResDtoGetUser;
 import iot.cloud.backend.service.dto.ResDtoLogin;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
@@ -19,8 +20,13 @@ public class UserController {
     @Resource
     private UserInfoService userInfoService;
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/ns/login")
     public ResResult<ResDtoLogin> login(@RequestBody ReqDtoLogin reqDtoLogin) {
         return userInfoService.login(reqDtoLogin);
+    }
+
+    @PostMapping(value = "/getUser")
+    public ResResult<ResDtoGetUser> getUser() {
+        return userInfoService.getUser();
     }
 }

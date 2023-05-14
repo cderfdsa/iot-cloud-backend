@@ -1,5 +1,6 @@
 package iot.cloud.backend.webapi.config;
 
+import com.alibaba.fastjson.JSON;
 import iot.cloud.backend.common.utils.StringUtils;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
@@ -12,6 +13,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * @author weichuang 2023/5/13 22:45
@@ -80,6 +82,14 @@ public class RequestCustomWrapper extends HttpServletRequestWrapper {
         }
 
         return emptyBytes;
+    }
+
+    public String getToken() {
+        Map<String, Object> jsonMap = (Map<String, Object>) JSON.parse(new String(body));
+        if (jsonMap == null || jsonMap.isEmpty()) {
+            return null;
+        }
+        return jsonMap.get("token").toString();
     }
 }
 

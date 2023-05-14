@@ -11,3 +11,19 @@ spring:
     username: root
     password: Aa0123
     type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 10
+      filters: stat,slf4j
+      filter:
+        slf4j:
+          enabled: true
+          statement-executable-sql-log-enable: true
+        stat:
+          enabled: true
+
+#
+jwt:
+  secret: Aa0123
+  expHours: 2

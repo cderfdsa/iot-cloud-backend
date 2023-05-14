@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "jwt",
+      "type": "iot.cloud.backend.config.ConfigForJWT",
+      "sourceType": "iot.cloud.backend.config.ConfigForJWT"
+    }
+  ],
+  "properties": [
+    {
+      "name": "jwt.exp-hours",
+      "type": "java.lang.Integer",
+      "sourceType": "iot.cloud.backend.config.ConfigForJWT"
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForJWT"
+    }
+  ],
+  "hints": []
+}

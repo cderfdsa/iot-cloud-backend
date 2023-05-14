@@ -2,6 +2,7 @@ package iot.cloud.backend.mapper.modules.user;
 
 import iot.cloud.backend.mapper.entity.EntityUserInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface MapperUserInfo {
-    @Select("select id,email from user_info where id=1")
-    EntityUserInfo selectById();
+    @Select("select id,email from user_info where email=#{email}")
+    EntityUserInfo selectByEmail(@Param("email") String email);
+
+    @Select("select id,email from user_info where id=#{id}")
+    EntityUserInfo selectById(@Param("id") Long id);
 }

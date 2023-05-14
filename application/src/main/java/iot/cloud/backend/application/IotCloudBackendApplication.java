@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(value = "iot.cloud.backend.webapi")
 @ComponentScan(value = "iot.cloud.backend.service")
 @ComponentScan(value = "iot.cloud.backend.mapper")
+@ComponentScan(value = "iot.cloud.backend.config")
 @MapperScan(basePackages = {
         "iot.cloud.backend.mapper.modules.user"
 })
