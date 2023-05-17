@@ -1,8 +1,8 @@
 package iot.cloud.backend.webapi.modules.user;
 
-import iot.cloud.backend.service.dto.ReqDtoLogin;
+import iot.cloud.backend.service.dto.ReqDtoLoginOrRegister;
 import iot.cloud.backend.service.dto.ResDtoGetUser;
-import iot.cloud.backend.service.dto.ResDtoLogin;
+import iot.cloud.backend.service.dto.ResDtoLoginOrRegister;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
 import jakarta.annotation.Resource;
@@ -20,9 +20,9 @@ public class UserController {
     @Resource
     private UserInfoService userInfoService;
 
-    @PostMapping(value = "/ns/login")
-    public ResResult<ResDtoLogin> login(@RequestBody ReqDtoLogin reqDtoLogin) {
-        return userInfoService.login(reqDtoLogin);
+    @PostMapping(value = "/ns/loginOrRegister")
+    public ResResult<ResDtoLoginOrRegister> loginOrRegister(@RequestBody ReqDtoLoginOrRegister reqDtoLoginOrRegister) {
+        return userInfoService.loginOrRegister(reqDtoLoginOrRegister);
     }
 
     @PostMapping(value = "/getUser")

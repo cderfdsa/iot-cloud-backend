@@ -5,13 +5,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * @author weichuang 2023/5/13 19:28
  */
 @Repository
 @Mapper
-public interface MapperUserInfo {
+public interface MapperUserInfo extends tk.mybatis.mapper.common.Mapper<EntityUserInfo>, MySqlMapper<EntityUserInfo> {
+
     @Select("select id,email from user_info where email=#{email}")
     EntityUserInfo selectByEmail(@Param("email") String email);
 

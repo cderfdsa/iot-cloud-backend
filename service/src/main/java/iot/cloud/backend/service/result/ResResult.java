@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResResult<T> {
-    private Integer status = 0;
+    private Integer result = 1;
+    private Integer errcode = 0;
     private String msg = "ok";
     private T data;
 
@@ -19,9 +20,9 @@ public class ResResult<T> {
         this.data = data;
     }
 
-    public ResResult(Integer status, String msg) {
-
-        this.status = status;
+    public ResResult(Integer errcode, String msg) {
+        this.result = 0;
+        this.errcode = errcode;
         this.msg = msg;
     }
 }

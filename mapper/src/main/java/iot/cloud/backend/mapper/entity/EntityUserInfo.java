@@ -15,4 +15,5 @@ import java.io.Serializable;
 public class EntityUserInfo implements Serializable {
     private Long id;
     private String email;
+    private String account;
 }

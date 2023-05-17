@@ -7,8 +7,9 @@ import lombok.Data;
  * @author weichuang 2023/5/13 19:41
  */
 @Data
-public class ResDtoLogin extends BaseResDto {
+public class ResDtoLoginOrRegister extends BaseResDto {
     private Long user_id;
     private String email;
+    private String account;
     private String token;
 }
