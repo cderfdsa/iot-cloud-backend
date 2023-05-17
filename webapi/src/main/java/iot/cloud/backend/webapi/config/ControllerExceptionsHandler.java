@@ -4,6 +4,7 @@ import iot.cloud.backend.common.utils.exception.InvalidateTokenException;
 import iot.cloud.backend.common.utils.exception.ParametersIncompleteException;
 import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.result.ResultCodeCommon;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author weichuang 2023/5/14 17:46
  */
 @RestControllerAdvice
+@Slf4j
 public class ControllerExceptionsHandler {
     @ExceptionHandler(value = {InvalidateTokenException.class})
     @ResponseBody
@@ -28,6 +30,7 @@ public class ControllerExceptionsHandler {
     @ExceptionHandler(value = {Exception.class})
     @ResponseBody
     public ResResult<?> exception(Exception exception) {
+        log.error(exception.toString());
         return ResultCodeCommon.FAIL;
     }
 }

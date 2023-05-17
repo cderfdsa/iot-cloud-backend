@@ -14,9 +14,9 @@ import tk.mybatis.mapper.common.MySqlMapper;
 @Mapper
 public interface MapperUserInfo extends tk.mybatis.mapper.common.Mapper<EntityUserInfo>, MySqlMapper<EntityUserInfo> {
 
-    @Select("select id,email from user_info where email=#{email}")
+    @Select("select id,email,account from user_info where email=#{email}")
     EntityUserInfo selectByEmail(@Param("email") String email);
 
-    @Select("select id,email from user_info where id=#{id}")
+    @Select("select id,email,account from user_info where id=#{id}")
     EntityUserInfo selectById(@Param("id") Long id);
 }

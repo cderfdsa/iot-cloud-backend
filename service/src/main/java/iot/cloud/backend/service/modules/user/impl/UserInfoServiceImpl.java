@@ -15,8 +15,8 @@ import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.utils.UserUtils;
 import jakarta.annotation.Resource;
-import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author weichuang 2023/5/13 19:43
@@ -29,6 +29,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     ConfigForJWT configForJWT;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResResult<ResDtoLoginOrRegister> loginOrRegister(ReqDtoLoginOrRegister reqDtoLoginOrRegister) {
         //
         if (StringUtils.isAnyEmpty(reqDtoLoginOrRegister.getEmail(), reqDtoLoginOrRegister.getValidateCode())) {
@@ -38,11 +39,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         EntityUserInfo entityUserInfo = mapperUserInfo.selectByEmail(reqDtoLoginOrRegister.getEmail());
         //
         ResDtoLoginOrRegister resDtoLoginOrRegister = new ResDtoLoginOrRegister();
-        if(entityUserInfo == null){
+        if (entityUserInfo == null) {
             entityUserInfo = new EntityUserInfo();
             entityUserInfo.setEmail(reqDtoLoginOrRegister.getEmail());
             // TODO 先这样
-            entityUserInfo.setAccount(RandomStringUtils.randomAscii(6,10));
+            entityUserInfo.setAccount(RandomStringUtils.randomAlphanumeric(6, 10));
             mapperUserInfo.insert(entityUserInfo);
             entityUserInfo = mapperUserInfo.selectByEmail(reqDtoLoginOrRegister.getEmail());
         }
