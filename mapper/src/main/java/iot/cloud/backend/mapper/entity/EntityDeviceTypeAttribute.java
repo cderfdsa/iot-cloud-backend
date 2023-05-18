@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "device_type_attributes")
-public class EntityDeviceTypeAttributes implements Serializable {
+public class EntityDeviceTypeAttribute implements Serializable {
     private Long id;
     @Column(name = "rel_device_type_id")
     private Long relDeviceTypeId;

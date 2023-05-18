@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "device_type_attributes_modbus")
-public class EntityDeviceTypeAttributesModbus implements Serializable {
+public class EntityDeviceTypeAttributeModbus implements Serializable {
     private Long id;
     @Column(name = "rel_device_type_id")
     private Long relDeviceTypeId;
