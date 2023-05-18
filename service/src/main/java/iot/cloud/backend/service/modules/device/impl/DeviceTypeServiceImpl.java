@@ -1,7 +1,6 @@
 package iot.cloud.backend.service.modules.device.impl;
 
-import iot.cloud.backend.common.utils.StringUtils;
-import iot.cloud.backend.common.utils.exception.ParametersIncompleteException;
+import iot.cloud.backend.mapper.entity.EntityDeviceType;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceType;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeService;
@@ -20,11 +19,18 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
     @Override
     public ResResult<ResDtoAdd> add(ReqDtoAddDeviceType reqDtoAddDeviceType) {
         //
-        if (StringUtils.isAnyEmpty(reqDtoAddDeviceType.getName())) {
-            throw new ParametersIncompleteException();
-        }
+        ResResult<ResDtoAdd> resResult = new ResResult<>();
         //
-        return null;
+        EntityDeviceType entityDeviceType = new EntityDeviceType();
+        entityDeviceType.setName(reqDtoAddDeviceType.getName());
+        entityDeviceType.setType(reqDtoAddDeviceType.getType());
+        entityDeviceType.setCommunicationType(reqDtoAddDeviceType.getCommunicationType());
+        entityDeviceType.setProtocolType(reqDtoAddDeviceType.getProtocolType());
+        entityDeviceType.setProtocolFormat(reqDtoAddDeviceType.getProtocolFormat());
+        //
+        int id = mapperDeviceType.insert(entityDeviceType);
+        //
+        return resResult;
     }
 
     @Override

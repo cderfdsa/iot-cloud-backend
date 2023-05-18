@@ -5,7 +5,10 @@ import iot.cloud.backend.service.modules.device.DeviceTypeAttributeModbusService
 import iot.cloud.backend.service.modules.device.DeviceTypeAttributeService;
 import iot.cloud.backend.service.modules.device.DeviceTypeService;
 import iot.cloud.backend.service.result.ResResult;
+import iot.cloud.backend.service.result.ResultCodeCommon;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +28,10 @@ public class DeviceTypeController {
     private DeviceTypeAttributeModbusService deviceTypeAttributeModbusService;
 
     @PostMapping(value = "/add")
-    public ResResult<ResDtoAdd> add(@RequestBody ReqDtoAddDeviceType reqDtoAddDeviceType) {
+    public ResResult<ResDtoAdd> add(@Valid @RequestBody ReqDtoAddDeviceType reqDtoAddDeviceType, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResultCodeCommon.PARAMETERS_INCOMPLETE;
+        }
         return deviceTypeService.add(reqDtoAddDeviceType);
     }
 
