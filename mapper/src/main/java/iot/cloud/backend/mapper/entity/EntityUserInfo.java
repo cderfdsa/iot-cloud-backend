@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -13,7 +12,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_info")
 public class EntityUserInfo implements Serializable {
     private Long id;
     private String email;

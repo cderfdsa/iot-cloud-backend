@@ -1,5 +1,6 @@
 package iot.cloud.backend.webapi.modules.device;
 
+import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeAttributeModbusService;
 import iot.cloud.backend.service.modules.device.DeviceTypeAttributeService;
@@ -48,6 +49,11 @@ public class DeviceTypeController {
     @PostMapping(value = "/get")
     public ResResult<ResDtoGetDeviceType> get(@RequestBody ReqDtoGetDeviceType reqDtoGetDeviceType) {
         return deviceTypeService.get(reqDtoGetDeviceType);
+    }
+
+    @PostMapping(value = "/page")
+    public ResResult<PageInfo<ResDtoPageDeviceType>> page(@RequestBody ReqDtoPageDeviceType reqDtoPageDeviceType) {
+        return deviceTypeService.page(reqDtoPageDeviceType);
     }
 
     @PostMapping(value = "/attribute/add")

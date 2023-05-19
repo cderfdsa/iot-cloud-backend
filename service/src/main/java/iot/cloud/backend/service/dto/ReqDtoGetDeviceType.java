@@ -7,9 +7,5 @@ import lombok.Data;
  */
 @Data
 public class ReqDtoGetDeviceType {
-    private String name;
-    private int type;
-    private int communicationType;
-    private int protocolType;
-    private int protocolFormat;
+    private Long id;
 }

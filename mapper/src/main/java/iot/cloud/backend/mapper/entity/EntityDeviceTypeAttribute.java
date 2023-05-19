@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -14,17 +12,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "device_type_attributes")
 public class EntityDeviceTypeAttribute implements Serializable {
     private Long id;
-    @Column(name = "rel_device_type_id")
     private Long relDeviceTypeId;
     private String name;
     private String code;
     private int type;
-    @Column(name = "data_type")
     private int dataType;
-    @Column(name = "protocol_format")
-    private int protocolFormat;
 
 }

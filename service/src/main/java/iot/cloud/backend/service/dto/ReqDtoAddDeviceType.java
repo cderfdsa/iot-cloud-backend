@@ -13,10 +13,10 @@ public class ReqDtoAddDeviceType {
     private String name;
     @Range(min = 1, max = 3)
     private int type;
-
+    @Range(min = 100, max = 400)
     private int communicationType;
     @Range(min = 1, max = 3)
     private int protocolType;
-    
+    @Range(min = 100, max = 400)
     private int protocolFormat;
 }

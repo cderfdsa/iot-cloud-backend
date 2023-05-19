@@ -7,7 +7,7 @@ import lombok.Data;
  * @author weichuang 2023/5/13 19:41
  */
 @Data
-public class ResDtoGetDeviceType extends BaseResDto {
+public class ResDtoPageDeviceType extends BaseResDto {
     private Long id;
     private String name;
     private int type;
