@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @author weichuang 2023/5/13 19:43
+ * @author weichuang
  */
 @Service
 public class UserInfoServiceImpl implements UserInfoService {

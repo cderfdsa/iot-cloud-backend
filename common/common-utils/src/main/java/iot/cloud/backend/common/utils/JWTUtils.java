@@ -7,7 +7,7 @@ import iot.cloud.backend.common.utils.exception.InvalidateTokenException;
 import java.time.Instant;
 
 /**
- * @author weichuang 2023/5/14 14:32
+ * @author weichuang
  */
 public class JWTUtils {
     private static final String NAME_USER_ID = "u";

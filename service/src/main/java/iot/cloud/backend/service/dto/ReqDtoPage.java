@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 /**
- * @author weichuang 2023/5/17 23:20
+ * @author weichuang
  */
 @Data
 public class ReqDtoPage {

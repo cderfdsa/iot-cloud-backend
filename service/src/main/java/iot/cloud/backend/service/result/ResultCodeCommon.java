@@ -1,7 +1,7 @@
 package iot.cloud.backend.service.result;
 
 /**
- * @author weichuang 2023/5/13 23:32
+ * @author weichuang
  */
 public class ResultCodeCommon {
     public static ResResult FAIL = new ResResult<>(1000, "fail");

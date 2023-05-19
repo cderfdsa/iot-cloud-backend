@@ -1,12 +1,13 @@
 package iot.cloud.backend.application;
 
+import io.github.quickmsg.starter.config.EnableMqttServer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import tk.mybatis.spring.annotation.MapperScan;
 
 /**
- * @author weichuang 2023/5/13 19:54
+ * @author weichuang
  */
 @SpringBootApplication
 @ComponentScan(value = "iot.cloud.backend.webapi")
@@ -16,7 +17,9 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = {
         "iot.cloud.backend.mapper.modules.*"
 })
+@EnableMqttServer
 public class IotCloudBackendApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(IotCloudBackendApplication.class, args);
     }

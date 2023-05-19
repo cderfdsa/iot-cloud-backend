@@ -56,3 +56,20 @@ spring:
 jwt:
   secret: Aa0123
   expHours: 2
+#
+smqtt:
+  log-level: INFO
+  tcp:
+    port: 1883
+  ws:
+    enable: true
+    port: 8999
+    path: /mqtt
+  auth:
+    sql:
+      driver: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/iot-cloud?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: Aa0123
+      authSql: select count(1) from device_info where code=? and pwd=?
+

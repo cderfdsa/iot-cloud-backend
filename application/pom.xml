@@ -23,6 +23,10 @@
             <groupId>iot.cloud.backend</groupId>
             <artifactId>webapi</artifactId>
         </dependency>
+        <dependency>
+            <groupId>iot.cloud.backend</groupId>
+            <artifactId>server-mqtt</artifactId>
+        </dependency>
         <!-- 三方依赖配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

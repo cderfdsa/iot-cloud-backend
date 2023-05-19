@@ -6,7 +6,7 @@ import iot.cloud.backend.service.dto.ResDtoLoginOrRegister;
 import iot.cloud.backend.service.result.ResResult;
 
 /**
- * @author weichuang 2023/5/13 19:39
+ * @author weichuang
  */
 public interface UserInfoService {
 

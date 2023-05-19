@@ -18,7 +18,11 @@
     </properties>
     <!-- 依赖配置-->
     <dependencies>
-
-
+        <!-- 子模块依赖配置-->
+        <!-- 三方依赖配置-->
+        <dependency>
+            <artifactId>smqttx-spring-boot-starter</artifactId>
+            <groupId>io.github.quickmsg</groupId>
+        </dependency>
     </dependencies>
 </project>

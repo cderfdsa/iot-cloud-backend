@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author weichuang 2023/5/18 16:53
+ * @author weichuang
  */
 @Service
 public class DeviceTypeServiceImpl implements DeviceTypeService {

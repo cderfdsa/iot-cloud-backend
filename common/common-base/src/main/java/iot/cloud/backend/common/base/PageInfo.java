@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author weichuang 2023/5/19 11:31
+ * @author weichuang
  */
 @Data
 public class PageInfo<T> {

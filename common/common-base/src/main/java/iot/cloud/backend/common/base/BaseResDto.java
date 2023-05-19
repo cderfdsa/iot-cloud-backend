@@ -1,7 +1,7 @@
 package iot.cloud.backend.common.base;
 
 /**
- * @author weichuang 2023/5/13 22:35
+ * @author weichuang
  */
 public abstract class BaseResDto {
 }

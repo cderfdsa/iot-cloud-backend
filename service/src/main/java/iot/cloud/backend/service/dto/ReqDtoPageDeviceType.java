@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author weichuang 2023/5/17 23:20
+ * @author weichuang
  */
 @Data
 public class ReqDtoPageDeviceType extends ReqDtoPage {

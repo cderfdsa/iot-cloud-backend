@@ -8,7 +8,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
- * @author weichuang 2023/5/18 16:53
+ * @author weichuang
  */
 @Service
 public class DeviceTypeAttributeModbusServiceImpl implements DeviceTypeAttributeModbusService {

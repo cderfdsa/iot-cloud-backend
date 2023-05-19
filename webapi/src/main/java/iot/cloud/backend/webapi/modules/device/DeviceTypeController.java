@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author weichuang 2023/5/17 23:18
+ * @author weichuang
  */
 @RestController
 @RequestMapping("/device/type")

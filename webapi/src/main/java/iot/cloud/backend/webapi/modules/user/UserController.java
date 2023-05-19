@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author weichuang 2023/5/13 19:48
+ * @author weichuang
  */
 @RestController
 @RequestMapping("/user")
@@ -30,5 +30,5 @@ public class UserController {
         return userInfoService.getUser();
     }
 
-    
+
 }

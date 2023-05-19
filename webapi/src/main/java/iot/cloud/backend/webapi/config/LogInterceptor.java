@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 
 /**
- * @author weichuang 2023/5/13 22:50
+ * @author weichuang
  */
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {

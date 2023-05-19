@@ -1,7 +1,7 @@
 package iot.cloud.backend.service.utils;
 
 /**
- * @author weichuang 2023/5/14 19:39
+ * @author weichuang
  */
 public class UserUtils {
     private static final ThreadLocal<Long> threadLocalForUserId = new ThreadLocal<>();

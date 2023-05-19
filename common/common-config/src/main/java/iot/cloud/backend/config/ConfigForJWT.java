@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author weichuang 2023/5/14 18:23
+ * @author weichuang
  */
 @ConfigurationProperties(prefix = "jwt")
 @Component

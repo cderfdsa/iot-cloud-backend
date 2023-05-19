@@ -6,7 +6,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 
 /**
- * @author weichuang 2023/5/17 23:20
+ * @author weichuang
  */
 @Data
 public class ReqDtoEditDeviceType {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * @author weichuang 2023/5/14 13:30
+ * @author weichuang
  */
 @Component
 public class TokenInterceptor implements HandlerInterceptor {

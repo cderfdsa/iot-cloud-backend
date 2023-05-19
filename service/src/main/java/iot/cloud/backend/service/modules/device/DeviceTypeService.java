@@ -5,7 +5,7 @@ import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.result.ResResult;
 
 /**
- * @author weichuang 2023/5/18 16:52
+ * @author weichuang
  */
 public interface DeviceTypeService {
 

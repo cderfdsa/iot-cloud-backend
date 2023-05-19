@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * @author weichuang 2023/5/14 17:46
+ * @author weichuang
  */
 @RestControllerAdvice
 @Slf4j
