@@ -17,8 +17,8 @@ public interface MapperDeviceTypeAttribute {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(@Param("obj") EntityDeviceTypeAttribute entityDeviceTypeAttribute);
 
-    @Delete("delete from device_type_attribute where id=#{id}")
-    @Delete("delete from device_type_attribute_modbus where rel_device_type_attribute_id=#{id}")
+    @Delete("delete from device_type_attribute where id=#{id};" +
+            "delete from device_type_attribute_modbus where rel_device_type_attribute_id=#{id};")
     int delete(@Param("id") Long id);
 
     @Update("update device_type_attribute set " +

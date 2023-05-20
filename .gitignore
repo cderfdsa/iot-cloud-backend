@@ -61,3 +61,4 @@ classes/*
 
 
 application.log.*
+ignite*

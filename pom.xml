@@ -155,6 +155,12 @@
                 <groupId>io.github.quickmsg</groupId>
                 <version>2.0.8</version>
             </dependency>
+            <!--smqttx+屏蔽h2版本冲突-->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.197</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
