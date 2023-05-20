@@ -32,4 +32,7 @@ public interface MapperDeviceInfo {
     @Select("select id,rel_device_type_id,rel_user_info_id,name,code,pwd " +
             "from device_info where id=#{id}")
     EntityDeviceInfo selectById(@Param("id") Long id);
+
+    @Select("select count(1) from device_info where code=#{code} and pwd=#{pwd}")
+    int countByCodeAndPwd(@Param("code") String code, @Param("pwd") String pwd);
 }

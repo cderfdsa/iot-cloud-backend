@@ -28,10 +28,6 @@
             <artifactId>server-mqtt</artifactId>
         </dependency>
         <!-- 三方依赖配置-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
     </dependencies>
     <!-- 构建配置-->
     <build>

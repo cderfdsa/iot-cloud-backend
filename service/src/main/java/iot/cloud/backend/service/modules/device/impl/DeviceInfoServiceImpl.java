@@ -12,4 +12,9 @@ import org.springframework.stereotype.Service;
 public class DeviceInfoServiceImpl implements DeviceInfoService {
     @Resource
     private MapperDeviceInfo mapperDeviceInfo;
+
+    @Override
+    public boolean auth(String code, String pwd) {
+        return mapperDeviceInfo.countByCodeAndPwd(code, pwd) == 1;
+    }
 }

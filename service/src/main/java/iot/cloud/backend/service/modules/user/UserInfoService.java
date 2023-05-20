@@ -13,4 +13,6 @@ public interface UserInfoService {
     ResResult<ResDtoLoginOrRegister> loginOrRegister(ReqDtoLoginOrRegister reqDtoLoginOrRegister);
 
     ResResult<ResDtoGetUser> getUser();
+
+    boolean authForMqtt(String account, String secret);
 }

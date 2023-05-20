@@ -76,6 +76,7 @@ smqtt:
       username: root
       password: Aa0123
       authSql: select count(1) from device_info where code=? and pwd=? and id!=?
+    spi: true
   cluster:
     enable: false
     localAddress: 127.0.0.1

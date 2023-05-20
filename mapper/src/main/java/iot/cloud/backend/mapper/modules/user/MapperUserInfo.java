@@ -22,4 +22,7 @@ public interface MapperUserInfo {
             "value(#{obj.email},#{obj.account})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(@Param("obj") EntityUserInfo entityUserInfo);
+
+    @Select("select count(1) from user_info where account=#{account} and secret=#{secret}")
+    int countByAccountAndSecret(@Param("account") String account, @Param("secret") String secret);
 }

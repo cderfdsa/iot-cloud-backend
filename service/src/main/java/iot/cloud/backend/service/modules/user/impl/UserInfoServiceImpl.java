@@ -44,6 +44,8 @@ public class UserInfoServiceImpl implements UserInfoService {
             entityUserInfo.setEmail(reqDtoLoginOrRegister.getEmail());
             // TODO 先这样
             entityUserInfo.setAccount(RandomStringUtils.randomAlphanumeric(6, 10));
+            //
+            entityUserInfo.setSecret(RandomStringUtils.randomAlphanumeric(6, 10));
             mapperUserInfo.insert(entityUserInfo);
             entityUserInfo = mapperUserInfo.selectByEmail(reqDtoLoginOrRegister.getEmail());
         }
@@ -61,5 +63,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         resDtoGetUser.setUser_id(entityUserInfo.getId());
         resDtoGetUser.setEmail(entityUserInfo.getEmail());
         return new ResResult<>(resDtoGetUser);
+    }
+
+    @Override
+    public boolean authForMqtt(String account, String secret) {
+        return mapperUserInfo.countByAccountAndSecret(account, secret) == 1;
     }
 }
