@@ -13,7 +13,7 @@ public interface MapperDeviceTypeAttributeModbus {
 
     @Insert("insert into " +
             "device_type_attribute_modbus(rel_device_type_id,rel_device_type_attribute_id,slave_address,register_address,read_write_type,data_type) " +
-            "value(#{obj.relDeviceTypeId},#{obj.relDeviceTypeAttributesId},#{obj.slaveAddress},#{obj.registerAddress},#{obj.readWriteType},#{obj.dataType})")
+            "value(#{obj.relDeviceTypeId},#{obj.relDeviceTypeAttributeId},#{obj.slaveAddress},#{obj.registerAddress},#{obj.readWriteType},#{obj.dataType})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(@Param("obj") EntityDeviceTypeAttributeModbus entityDeviceTypeAttributeModbus);
 

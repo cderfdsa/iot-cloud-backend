@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class EntityDeviceTypeAttributeModbus implements Serializable {
     private Long id;
     private Long relDeviceTypeId;
-    private Long relDeviceTypeAttributesId;
+    private Long relDeviceTypeAttributeId;
     private int slaveAddress;
     private int registerAddress;
     private int readWriteType;

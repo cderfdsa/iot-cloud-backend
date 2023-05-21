@@ -7,9 +7,9 @@ import lombok.Data;
  */
 @Data
 public class ReqDtoAddDeviceTypeAttribute {
+    private Long relDeviceTypeId;
     private String name;
+    private String code;
     private int type;
-    private int communicationType;
-    private int protocolType;
-    private int protocolFormat;
+    private int dataType;
 }

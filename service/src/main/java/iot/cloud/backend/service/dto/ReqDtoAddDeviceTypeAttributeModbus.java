@@ -7,9 +7,10 @@ import lombok.Data;
  */
 @Data
 public class ReqDtoAddDeviceTypeAttributeModbus {
-    private String name;
-    private int type;
-    private int communicationType;
-    private int protocolType;
-    private int protocolFormat;
+    private Long relDeviceTypeId;
+    private Long relDeviceTypeAttributeId;
+    private int slaveAddress;
+    private int registerAddress;
+    private int readWriteType;
+    private int dataType;
 }

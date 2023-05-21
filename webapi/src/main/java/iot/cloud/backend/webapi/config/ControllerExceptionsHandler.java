@@ -30,6 +30,7 @@ public class ControllerExceptionsHandler {
     @ExceptionHandler(value = {Exception.class})
     @ResponseBody
     public ResResult<?> exception(Exception exception) {
+        exception.printStackTrace();
         log.error(exception.toString());
         return ResultCodeCommon.FAIL;
     }

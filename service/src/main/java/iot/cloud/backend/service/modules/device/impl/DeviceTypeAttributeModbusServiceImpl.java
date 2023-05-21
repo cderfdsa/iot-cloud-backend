@@ -1,5 +1,6 @@
 package iot.cloud.backend.service.modules.device.impl;
 
+import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttributeModbus;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceTypeAttributeModbus;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeAttributeModbusService;
@@ -17,7 +18,23 @@ public class DeviceTypeAttributeModbusServiceImpl implements DeviceTypeAttribute
 
     @Override
     public ResResult<ResDtoAdd> add(ReqDtoAddDeviceTypeAttributeModbus reqDtoAddDeviceTypeAttributeModbus) {
-        return null;
+        //
+        ResResult<ResDtoAdd> resResult = new ResResult<>();
+        ResDtoAdd resDtoAdd = new ResDtoAdd();
+        resResult.setData(resDtoAdd);
+        //
+        EntityDeviceTypeAttributeModbus entityDeviceTypeAttributeModbus = new EntityDeviceTypeAttributeModbus();
+        entityDeviceTypeAttributeModbus.setRelDeviceTypeId(reqDtoAddDeviceTypeAttributeModbus.getRelDeviceTypeId());
+        entityDeviceTypeAttributeModbus.setRelDeviceTypeAttributeId(reqDtoAddDeviceTypeAttributeModbus.getRelDeviceTypeAttributeId());
+        entityDeviceTypeAttributeModbus.setSlaveAddress(reqDtoAddDeviceTypeAttributeModbus.getSlaveAddress());
+        entityDeviceTypeAttributeModbus.setRegisterAddress(reqDtoAddDeviceTypeAttributeModbus.getRegisterAddress());
+        entityDeviceTypeAttributeModbus.setReadWriteType(reqDtoAddDeviceTypeAttributeModbus.getReadWriteType());
+        entityDeviceTypeAttributeModbus.setDataType(reqDtoAddDeviceTypeAttributeModbus.getDataType());
+        //
+        mapperDeviceTypeAttributeModbus.insert(entityDeviceTypeAttributeModbus);
+        resDtoAdd.setId(entityDeviceTypeAttributeModbus.getId());
+        //
+        return resResult;
     }
 
     @Override
