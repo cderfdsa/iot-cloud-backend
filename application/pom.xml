@@ -27,6 +27,10 @@
             <groupId>iot.cloud.backend</groupId>
             <artifactId>server-mqtt</artifactId>
         </dependency>
+        <dependency>
+            <groupId>iot.cloud.backend</groupId>
+            <artifactId>server-tcp</artifactId>
+        </dependency>
         <!-- 三方依赖配置-->
     </dependencies>
     <!-- 构建配置-->
