@@ -13,8 +13,11 @@ import iot.cloud.backend.service.dto.ResDtoGetUser;
 import iot.cloud.backend.service.dto.ResDtoLoginOrRegister;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
+import iot.cloud.backend.service.result.ResultCodeCommon;
 import iot.cloud.backend.service.utils.UserUtils;
 import jakarta.annotation.Resource;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     private MapperUserInfo mapperUserInfo;
     @Resource
     ConfigForJWT configForJWT;
+    @Resource(name = "cacheManagerForLoginOrRegister")
+    private CacheManager cacheManagerForLoginOrRegister;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -34,6 +39,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         //
         if (StringUtils.isAnyEmpty(reqDtoLoginOrRegister.getEmail(), reqDtoLoginOrRegister.getValidateCode())) {
             throw new ParametersIncompleteException();
+        }
+        Cache cache = cacheManagerForLoginOrRegister.getCache("vcForLoginOrRegister");
+        String realValidateCode = cache.get(reqDtoLoginOrRegister.getEmail(), String.class);
+        if (realValidateCode == null || !realValidateCode.equals(reqDtoLoginOrRegister.getValidateCode())) {
+            return ResultCodeCommon.VALIDATE_CODE_ERROR;
         }
         //
         EntityUserInfo entityUserInfo = mapperUserInfo.selectByEmail(reqDtoLoginOrRegister.getEmail());

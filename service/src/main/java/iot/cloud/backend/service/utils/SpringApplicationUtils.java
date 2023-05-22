@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @author weichuang 2023/5/20 23:30
+ * @author weichuang
  */
 public class SpringApplicationUtils {
     private static SpringApplication springApplication;

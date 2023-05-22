@@ -75,4 +75,14 @@ smqtt:
     enable: false
 
 #
-
+iot:
+  cloud:
+    backend:
+      mqtt-broker:
+        url: tcp://127.0.0.1:1883
+        clientId: sys:default
+        topics: /device/+/attributes/u,/account/+/+/attributes/u
+        username: admin
+        password: Aa0123
+        timeout: 10
+        keepalive: 20

@@ -6,7 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * @author weichuang 2023/5/21 23:16
+ * @author weichuang
  */
 @Component
 public class TcpServerStartListener implements ApplicationRunner {

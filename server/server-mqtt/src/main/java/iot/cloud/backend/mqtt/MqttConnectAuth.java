@@ -9,7 +9,7 @@ import org.springframework.boot.SpringApplication;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author weichuang 2023/5/20 23:18
+ * @author weichuang
  */
 public class MqttConnectAuth implements IMqttConnectAuth {
     @Override
