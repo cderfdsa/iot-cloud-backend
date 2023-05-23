@@ -19,5 +19,7 @@ public class EntityDeviceInfo implements Serializable {
     private String name;
     private String code;
     private String pwd;
+    private int onlineStatus;
+    private int alarmStatus;
 
 }
