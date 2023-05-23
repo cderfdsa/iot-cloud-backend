@@ -63,6 +63,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         resDtoLoginOrRegister.setEmail(entityUserInfo.getEmail());
         resDtoLoginOrRegister.setAccount(entityUserInfo.getAccount());
         resDtoLoginOrRegister.setToken(JWTUtils.createToken(entityUserInfo.getId(), entityUserInfo.getEmail(), configForJWT.getSecret(), configForJWT.getExpHours()));
+        //
+        cache.evict(entityUserInfo.getEmail());
+        //
         return new ResResult<>(resDtoLoginOrRegister);
     }
 

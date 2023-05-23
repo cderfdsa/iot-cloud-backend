@@ -1,7 +1,7 @@
 package iot.cloud.backend.service.modules.email.impl;
 
 import iot.cloud.backend.common.utils.RandomStringUtils;
-import iot.cloud.backend.service.dto.ResDtoEmpty;
+import iot.cloud.backend.service.dto.ResDtoValidateCode;
 import iot.cloud.backend.service.modules.email.EmailSendService;
 import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.result.ResultCodeCommon;
@@ -10,10 +10,12 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 /**
  * @author weichuang
  */
+@Service
 public class EmailSendServiceImpl implements EmailSendService {
 
     @Resource
@@ -22,7 +24,7 @@ public class EmailSendServiceImpl implements EmailSendService {
     private CacheManager cacheManagerForLoginOrRegister;
 
     @Override
-    public ResResult<ResDtoEmpty> sendValidateCodeForLoginOrRegister(String email) {
+    public ResResult<ResDtoValidateCode> sendValidateCodeForLoginOrRegister(String email) {
         String code = RandomStringUtils.randomNumeric(6);
         //
         Cache cache = cacheManagerForLoginOrRegister.getCache("vcForLoginOrRegister");
@@ -36,11 +38,12 @@ public class EmailSendServiceImpl implements EmailSendService {
         //
         cache.put(email, code);
         //
-        return new ResResult<>(new ResDtoEmpty());
+        return new ResResult<>(new ResDtoValidateCode(email));
     }
 
     private void sendEmail(String email, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("cniiot@163.com");
         message.setTo(email);
         message.setSubject(subject);
         message.setText(text);

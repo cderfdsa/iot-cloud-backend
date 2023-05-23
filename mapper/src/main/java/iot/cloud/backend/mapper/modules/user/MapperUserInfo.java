@@ -18,8 +18,8 @@ public interface MapperUserInfo {
     EntityUserInfo selectById(@Param("id") Long id);
 
     @Insert("insert into " +
-            "user_info(email,account) " +
-            "value(#{obj.email},#{obj.account})")
+            "user_info(email,account,secret) " +
+            "value(#{obj.email},#{obj.account},#{obj.secret})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(@Param("obj") EntityUserInfo entityUserInfo);
 

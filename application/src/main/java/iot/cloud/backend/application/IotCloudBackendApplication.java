@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.integration.annotation.IntegrationComponentScan;
 
 /**
  * @author weichuang
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(value = "iot.cloud.backend.mapper")
 @ComponentScan(value = "iot.cloud.backend.config")
 @ComponentScan(value = "iot.cloud.backend.tcp")
+@IntegrationComponentScan(value = "iot.cloud.backend.service")
 @MapperScan(basePackages = {
         "iot.cloud.backend.mapper.modules.*"
 })

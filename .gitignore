@@ -54,6 +54,7 @@ classes/*
 /src/main/resources/rebel.xml
 *.iml
 */target/*
+*target/*
 *.lck
 *.log
 */src/main/resources/application-local.properties

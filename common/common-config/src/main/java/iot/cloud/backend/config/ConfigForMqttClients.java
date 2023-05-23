@@ -95,7 +95,6 @@ public class ConfigForMqttClients {
     }
 
 
-    @Lazy
     @Bean
     public MessageProducer inbound() {
         String[] inboundTopics = topics.split(",");
@@ -103,7 +102,7 @@ public class ConfigForMqttClients {
         adapter.setCompletionTimeout(5000);
         adapter.setQos(1);
         adapter.setConverter(new DefaultPahoMessageConverter());
-        adapter.setOutputChannel(mqttOutboundChannel());
+        adapter.setOutputChannel(mqttInboundChannel());
         adapter.setErrorChannel(errorChannel());
         return adapter;
     }

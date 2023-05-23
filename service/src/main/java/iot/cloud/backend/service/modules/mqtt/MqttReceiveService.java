@@ -8,4 +8,6 @@ import org.springframework.messaging.MessageHandler;
 public interface MqttReceiveService {
 
     MessageHandler handleMessage();
+
+    void start();
 }

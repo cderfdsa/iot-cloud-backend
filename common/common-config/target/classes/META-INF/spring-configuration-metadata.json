@@ -6,6 +6,11 @@
       "sourceType": "iot.cloud.backend.config.ConfigForTcp"
     },
     {
+      "name": "iot.cloud.backend.mqtt-broker",
+      "type": "iot.cloud.backend.config.ConfigForMqttClients",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
       "name": "jwt",
       "type": "iot.cloud.backend.config.ConfigForJWT",
       "sourceType": "iot.cloud.backend.config.ConfigForJWT"
@@ -21,6 +26,41 @@
       "name": "bus.port",
       "type": "java.lang.Integer",
       "sourceType": "iot.cloud.backend.config.ConfigForTcp"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.client-id",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.keepalive",
+      "type": "java.lang.Integer",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.password",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.topics",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.url",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
+    },
+    {
+      "name": "iot.cloud.backend.mqtt-broker.username",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
     },
     {
       "name": "jwt.exp-hours",
