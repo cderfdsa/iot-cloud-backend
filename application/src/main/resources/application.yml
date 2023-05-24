@@ -72,7 +72,9 @@ smqtt:
     port: 8999
     path: /mqtt
   auth:
-    spi: true
+    spi:
+      manager-username: admin
+      manager-password: Aa0123
   cluster:
     enable: false
 
@@ -82,9 +84,9 @@ iot:
     backend:
       mqtt-broker:
         url: tcp://127.0.0.1:1883
-        clientId: sys:default
-        topics: /device/+/attributes/u,/account/+/+/attributes/u
-        username: default
+        clientId: manager:admin
+        topics: /device/+/attributes/u,/account/+/+/attributes/u,/device/+/attributes/req/u,/account/+/+/attributes/req/u
+        username: admin
         password: Aa0123
         timeout: 10
         keepalive: 30
