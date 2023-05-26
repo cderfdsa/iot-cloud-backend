@@ -63,3 +63,4 @@ classes/*
 
 application.log.*
 ignite*
+hivemq/embedded-data-folder*

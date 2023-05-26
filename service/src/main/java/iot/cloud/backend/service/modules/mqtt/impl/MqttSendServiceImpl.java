@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 /**
  * @author weichuang
  */
-@Service
 @Lazy
+@Service
 public class MqttSendServiceImpl implements MqttSendService {
 
     @Resource

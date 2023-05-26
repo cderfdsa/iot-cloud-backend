@@ -9,5 +9,4 @@ public interface MqttReceiveService {
 
     MessageHandler handleMessage();
 
-    void start();
 }

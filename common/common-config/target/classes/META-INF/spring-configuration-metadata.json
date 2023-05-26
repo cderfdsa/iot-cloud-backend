@@ -6,6 +6,17 @@
       "sourceType": "iot.cloud.backend.config.ConfigForTcp"
     },
     {
+      "name": "hivemq",
+      "type": "iot.cloud.backend.config.ConfigForHiveMq",
+      "sourceType": "iot.cloud.backend.config.ConfigForHiveMq"
+    },
+    {
+      "name": "hivemq.auth-manager",
+      "type": "iot.cloud.backend.config.ConfigForHiveMq$AuthManager",
+      "sourceType": "iot.cloud.backend.config.ConfigForHiveMq",
+      "sourceMethod": "getAuthManager()"
+    },
+    {
       "name": "iot.cloud.backend.mqtt-broker",
       "type": "iot.cloud.backend.config.ConfigForMqttClients",
       "sourceType": "iot.cloud.backend.config.ConfigForMqttClients"
@@ -26,6 +37,16 @@
       "name": "bus.port",
       "type": "java.lang.Integer",
       "sourceType": "iot.cloud.backend.config.ConfigForTcp"
+    },
+    {
+      "name": "hivemq.auth-manager.password",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForHiveMq$AuthManager"
+    },
+    {
+      "name": "hivemq.auth-manager.username",
+      "type": "java.lang.String",
+      "sourceType": "iot.cloud.backend.config.ConfigForHiveMq$AuthManager"
     },
     {
       "name": "iot.cloud.backend.mqtt-broker.client-id",
