@@ -3,6 +3,7 @@ package iot.cloud.backend.application;
 import iot.cloud.backend.mqtt.MqttServerUtils;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
 import iot.cloud.backend.tcp.TcpServerUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -27,9 +28,12 @@ import org.springframework.integration.annotation.IntegrationComponentScan;
         "iot.cloud.backend.mapper.modules.*"
 })
 @EnableCaching
+@Slf4j
 public class IotCloudBackendApplication {
 
     public static void main(String[] args) {
+        //
+        log.info("main");
         //
         MqttServerUtils.start();
         //

@@ -5,6 +5,7 @@ server:
     context-path: /webapi
 #
 logging:
+  config: classpath:logback.xml
   level:
     root: info
     iot.cloud.backend.mapper: debug
@@ -13,8 +14,9 @@ logging:
   file:
     name: logs/application.log
   pattern:
-  #console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
-  #file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
+
 
 # MySQL数据源配置
 spring:

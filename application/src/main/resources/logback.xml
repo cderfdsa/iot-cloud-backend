@@ -2,19 +2,17 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-30(%d %level)-a %msg%n%ex</pattern>
+            <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread{10}] %logger{10} - %msg%n</pattern>-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %red(${PID})
+                --- %magenta([%thread]) %cyan([%-40.40logger{39},%method,%line])
+                --- %msg%n
+            </pattern>
         </encoder>
     </appender>
 
-    <logger name="migrations" level="WARN" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <!--    <root>-->
-    <!--        <appender-ref ref="CONSOLE"/>-->
-    <!--    </root>-->
-
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
