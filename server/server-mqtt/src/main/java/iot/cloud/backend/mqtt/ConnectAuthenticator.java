@@ -4,9 +4,16 @@ import com.hivemq.extension.sdk.api.annotations.NotNull;
 import com.hivemq.extension.sdk.api.auth.SimpleAuthenticator;
 import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthInput;
 import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthOutput;
+import iot.cloud.backend.common.utils.constant.ConstantForStatus;
+import iot.cloud.backend.common.utils.constant.ConstantForStatusReason;
 import iot.cloud.backend.config.ConfigForHiveMq;
+import iot.cloud.backend.service.dto.ReqDtoAddHistoryDeviceOnline;
+import iot.cloud.backend.service.dto.ReqDtoGetDeviceInfo;
+import iot.cloud.backend.service.dto.ResDtoGetDeviceInfo;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
+import iot.cloud.backend.service.modules.history.HistoryDeviceOnlineService;
 import iot.cloud.backend.service.modules.user.UserInfoService;
+import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +42,8 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
             DeviceInfoService deviceInfoService = SpringApplicationUtils.getApplicationContext().getBean(DeviceInfoService.class);
             if (deviceInfoService.auth(username, password)) {
                 simpleAuthOutput.authenticateSuccessfully();
+                //
+                addHistoryDeviceOnlineSuccess(username);
             } else {
                 simpleAuthOutput.failAuthentication();
             }
@@ -55,5 +64,23 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
         } else {
             simpleAuthOutput.failAuthentication("clientId starts with 'device:'");
         }
+    }
+
+    private void addHistoryDeviceOnlineSuccess(String deviceCode) {
+        //
+        ReqDtoAddHistoryDeviceOnline reqDtoAddHistoryDeviceOnline = new ReqDtoAddHistoryDeviceOnline();
+        //
+        DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
+        ResResult<ResDtoGetDeviceInfo> resResult = deviceInfoService.get(new ReqDtoGetDeviceInfo(deviceCode));
+        //
+        reqDtoAddHistoryDeviceOnline.setDeviceCode(deviceCode);
+        reqDtoAddHistoryDeviceOnline.setDeviceName(resResult.getData().getName());
+        reqDtoAddHistoryDeviceOnline.setRelUserInfoId(resResult.getData().getRelUserInfoId());
+        reqDtoAddHistoryDeviceOnline.setRelDeviceInfoId(resResult.getData().getId());
+        reqDtoAddHistoryDeviceOnline.setStatus(ConstantForStatus.ONLINE);
+        reqDtoAddHistoryDeviceOnline.setStatusReason(ConstantForStatusReason.OK);
+        //
+        HistoryDeviceOnlineService historyDeviceOnlineService = SpringApplicationUtils.getBean(HistoryDeviceOnlineService.class);
+        historyDeviceOnlineService.add(reqDtoAddHistoryDeviceOnline);
     }
 }

@@ -1,8 +1,11 @@
 package iot.cloud.backend.tcp;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.GlobalEventExecutor;
 import iot.cloud.backend.config.ConfigForTcp;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class TcpServerUtils {
+    public static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static final TcpServerUtils INSTANCE = new TcpServerUtils();
     private SocketInitializer socketInitializer;
     private ServerBootstrap serverBootstrap;

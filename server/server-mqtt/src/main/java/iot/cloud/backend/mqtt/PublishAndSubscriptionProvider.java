@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PublishAndSubscriptionProvider implements AuthorizerProvider {
     @Override
     public @Nullable Authorizer getAuthorizer(@NotNull AuthorizerProviderInput authorizerProviderInput) {
-        log.info("getAuthorizer,{}", authorizerProviderInput);
+        log.info("getAuthorizer,{}", authorizerProviderInput.getClientInformation().getClientId());
         return new PublishAndSubscriptionAuthorizer();
     }
 }

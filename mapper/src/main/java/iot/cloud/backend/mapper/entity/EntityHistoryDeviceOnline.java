@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author weichuang
@@ -12,15 +13,13 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntityDeviceType implements Serializable {
+public class EntityHistoryDeviceOnline implements Serializable {
     private Long id;
     private Long relUserInfoId;
-    private String name;
-    private int type;
-    private int communicationType;
-    private int protocolType;
-    private int protocolFormat;
-    private int busTimeValue;
-    private char busTimeUnit;
-
+    private Long relDeviceInfoId;
+    private String deviceName;
+    private String deviceCode;
+    private Date createDt;
+    private Integer status;
+    private Integer statusReason;
 }

@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author weichuang
@@ -29,6 +30,7 @@ import org.springframework.integration.annotation.IntegrationComponentScan;
 })
 @EnableCaching
 @Slf4j
+@EnableScheduling
 public class IotCloudBackendApplication {
 
     public static void main(String[] args) {

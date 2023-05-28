@@ -22,7 +22,6 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
         return message -> {
             MessageHeaders messageHeaders = message.getHeaders();
             String messagePayload = (String) message.getPayload();
-            log.info("----------------------");
             log.info("messageHeaders={}", messageHeaders);
             log.info("messagePayload={}", JSONUtils.formatString(messagePayload));
         };

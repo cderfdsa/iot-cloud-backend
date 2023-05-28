@@ -25,4 +25,8 @@ public class SpringApplicationUtils {
     public static void setApplicationContext(ApplicationContext applicationContext) {
         SpringApplicationUtils.applicationContext = applicationContext;
     }
+
+    public static <T> T getBean(Class<T> requiredType) {
+        return applicationContext.getBean(requiredType);
+    }
 }

@@ -14,8 +14,8 @@ import java.util.List;
 public interface MapperDeviceType {
 
     @Insert("insert into " +
-            "device_type(name,type,communication_type,protocol_type,protocol_format) " +
-            "value(#{obj.name},#{obj.type},#{obj.communicationType},#{obj.protocolType},#{obj.protocolFormat})")
+            "device_type(rel_user_info_id,name,type,communication_type,protocol_type,protocol_format, bus_time_value, bus_time_unit) " +
+            "value(#{obj.relUserInfoId},#{obj.name},#{obj.type},#{obj.communicationType},#{obj.protocolType},#{obj.protocolFormat},#{obj.busTimeValue},#{obj.busTimeUnit})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(@Param("obj") EntityDeviceType entityDeviceType);
 
@@ -33,7 +33,7 @@ public interface MapperDeviceType {
             "where id=#{obj.id}")
     int update(@Param("obj") EntityDeviceType entityDeviceType);
 
-    @Select("select id,name,type,communication_type,protocol_type,protocol_format " +
+    @Select("select id,rel_user_info_id,name,type,communication_type,protocol_type,protocol_format " +
             "from device_type where id=#{id}")
     EntityDeviceType selectById(@Param("id") Long id);
 
@@ -41,7 +41,7 @@ public interface MapperDeviceType {
             "from device_type where name like '%#{nameKey}%'")
     Long limitTotal(@Param("nameKey") String nameKey);
 
-    @Select("select id,name,type,communication_type,protocol_type,protocol_format " +
+    @Select("select id,rel_user_info_id,name,type,communication_type,protocol_type,protocol_format " +
             "from device_type where name like '%#{nameKey}%' limit #{offset},#{rows}")
     List<EntityDeviceType> limit(@Param("nameKey") String nameKey, @Param("offset") Long offset, @Param("rows") int rows);
 }

@@ -6,16 +6,7 @@ server:
 #
 logging:
   config: classpath:logback.xml
-  level:
-    root: info
-    iot.cloud.backend.mapper: debug
-    com.alibaba.druid: debug
-    com.hivemq.configuration.reader: debug
-  file:
-    name: logs/application.log
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
-    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{30} - %msg%n'
+
 
 
 # MySQL数据源配置
@@ -58,6 +49,14 @@ spring:
     host: smtp.163.com
     username: cniiot@163.com
     password: VJSTLHTBRHUMIGME
+  task:
+    scheduling:
+      pool:
+        size: 1
+      thread-name-prefix: iot_cloud_quartz_
+      shutdown:
+        await-termination: false
+        await-termination-period: 10s
 
 
 

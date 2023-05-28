@@ -127,6 +127,11 @@
                 <version>3.12.0</version>
             </dependency>
             <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.15</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>1.2.17</version>
@@ -194,6 +199,19 @@
                 <artifactId>activation</artifactId>
                 <version>1.1.1</version>
             </dependency>
+            <!--https://hutool.cn-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.19</version>
+            </dependency>
+            <!--https://github.com/MangoAutomation/modbus4j-->
+            <dependency>
+                <groupId>com.infiniteautomation</groupId>
+                <artifactId>modbus4j</artifactId>
+                <version>3.0.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -238,6 +256,29 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public</url>
+        </repository>
+        <!-- modbus4j -->
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>ias-snapshots</id>
+            <name>Infinite Automation Snapshot Repository</name>
+            <url>https://maven.mangoautomation.net/repository/ias-snapshot/</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>ias-releases</id>
+            <name>Infinite Automation Release Repository</name>
+            <url>https://maven.mangoautomation.net/repository/ias-release/</url>
         </repository>
     </repositories>
 
