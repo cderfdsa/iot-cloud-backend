@@ -51,10 +51,10 @@
 
 ### 协议设计草图
 
-/device/${device.code}/attributes/d
 /device/${device.code}/attributes/u
-/account/${user.account}/${device.code}/attributes/d
+/device/${device.code}/attributes/d
 /account/${user.account}/${device.code}/attributes/u
+/account/${user.account}/${device.code}/attributes/d
 /account/${user.account}/online/d
 /account/${user.account}/alarm/d
 

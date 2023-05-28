@@ -2,8 +2,10 @@ package iot.cloud.backend.common.utils;
 
 import cn.hutool.core.io.checksum.CRC16;
 import cn.hutool.core.io.checksum.crc16.CRC16Modbus;
+import com.serotonin.modbus4j.base.ModbusUtils;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
 import com.serotonin.modbus4j.msg.*;
+import com.serotonin.modbus4j.serial.rtu.RtuMessageResponse;
 import com.serotonin.modbus4j.sero.util.queue.ByteQueue;
 
 import java.nio.ByteOrder;
@@ -94,6 +96,18 @@ public class Modbus4jUtils {
     public static byte[] writeHoldingRegisters(int slaveId, int startOffset, short[] data) throws ModbusTransportException {
         WriteRegistersRequest request = new WriteRegistersRequest(slaveId, startOffset, data);
         return retBytesFromRequest(request);
+    }
+
+    /**
+     * 读取保持寄存器数据，相当于功能码：03H-读保持寄存器
+     */
+    public static int readHoldingRegisterResInt(byte[] data) throws ModbusTransportException {
+        ByteQueue byteQueue = new ByteQueue(data);
+        ModbusResponse response = ModbusResponse.createModbusResponse(byteQueue);
+        RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
+        ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
+        ReadHoldingRegistersResponse readHoldingRegistersResponse = (ReadHoldingRegistersResponse) rtuResponse.getModbusResponse();
+        return ByteUtils.bytesToInt(readHoldingRegistersResponse.getData());
     }
 }
 

@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.AttributeKey;
 import iot.cloud.backend.common.utils.HexUtils;
+import iot.cloud.backend.common.utils.Modbus4jUtils;
 import iot.cloud.backend.common.utils.StrUtils;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
@@ -42,9 +43,11 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
                 String pwd = strArr[1];
                 DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
                 if (deviceInfoService.auth(code, pwd)) {
-                    ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(true);
                     ctx.channel().attr(AttributeKey.valueOf(KEY_CODE)).set(code);
+                    ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(true);
                     ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
+                    // TODO connect to mqtt broker
+                    // TODO subscribe to mqtt broker
                 } else {
                     ctx.channel().close();
                     log.warn("auth fail = {},{}", code, pwd);
@@ -58,6 +61,11 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
             byte[] msgByteArr = (byte[]) msg;
             log.info("channelRead msg {}", HexUtils.encodeHexStr(msgByteArr));
             ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
+            // TODO publish to mqtt broker
+            AttributeKey<String> attrCode = AttributeKey.valueOf(KEY_ATTR_CODE);
+            String attrCodeValue = ctx.channel().attr(attrCode).get();
+            int value = Modbus4jUtils.readHoldingRegisterResInt(msgByteArr);
+            log.info("channelRead value = {}", value);
         } else {
             log.error("channelRead error");
         }
@@ -69,11 +77,13 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
         log.info("handlerAdded ID,{}", ctx.channel().id().asShortText());
         if (!AttributeKey.exists(KEY_REGISTER)) {
             ctx.channel().attr(AttributeKey.newInstance(KEY_REGISTER)).set(false);
-            ctx.channel().attr(AttributeKey.newInstance(KEY_CAN_BUS)).set(true);
+            ctx.channel().attr(AttributeKey.newInstance(KEY_CAN_BUS)).set(false);
+            ctx.channel().attr(AttributeKey.newInstance(KEY_ATTR_CODE)).set("");
         } else {
             log.warn("handlerAdded exits");
             ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(false);
-            ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
+            ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(false);
+            ctx.channel().attr(AttributeKey.valueOf(KEY_ATTR_CODE)).set("");
         }
         clients.add(ctx.channel());
     }
@@ -83,6 +93,7 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
         //
         log.info("handlerRemoved ID,{}", ctx.channel().id().asShortText());
         clients.remove(ctx.channel());
+        // TODO disconnect to mqtt broker
     }
 
     @Override
@@ -92,5 +103,6 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
         log.error(cause.toString(), cause);
         ctx.channel().close();
         clients.remove(ctx.channel());
+        // TODO disconnect to mqtt broker
     }
 }

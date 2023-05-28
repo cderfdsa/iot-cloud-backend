@@ -59,6 +59,7 @@ public class BusForModbus {
                                 byte[] data = Modbus4jUtils.readHoldingRegister(resDtoGetDeviceTypeAttributeModbus.getSlaveAddress(), resDtoGetDeviceTypeAttributeModbus.getRegisterAddress(), 1);
                                 channel.writeAndFlush(data);
                                 whichDoingIndex = whichDoingIndex + 1;
+                                channel.attr(AttributeKey.valueOf(KEY_ATTR_CODE)).set(resDtoGetDeviceTypeAttributeModbus.getCode());
                                 channel.attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(false);
                                 //
                                 Thread.sleep(20);

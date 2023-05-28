@@ -2,8 +2,8 @@ package iot.cloud.backend.service.modules.device.impl;
 
 import iot.cloud.backend.common.utils.RandomStringUtils;
 import iot.cloud.backend.mapper.entity.EntityDeviceInfo;
-import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttributeModbus;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceInfo;
+import iot.cloud.backend.mapper.vo.VoModbusAttribute;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
 import iot.cloud.backend.service.result.ResResult;
@@ -73,12 +73,13 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
         List<ResDtoGetDeviceTypeAttributeModbus> list = new ArrayList<>();
         resResult.setData(list);
         //
-        List<EntityDeviceTypeAttributeModbus> attributeModbusList = mapperDeviceInfo.selectAttributeModbusByCodeAndTimeBus(reqDtoGetDeviceInfo.getCode().get(), reqDtoGetDeviceInfo.getBusTimeValue().get(), reqDtoGetDeviceInfo.getBusTimeUnit().get());
-        for (EntityDeviceTypeAttributeModbus entityDeviceTypeAttributeModbus : attributeModbusList) {
+        List<VoModbusAttribute> attributeModbusList = mapperDeviceInfo.selectAttributeModbusByCodeAndTimeBus(reqDtoGetDeviceInfo.getCode().get(), reqDtoGetDeviceInfo.getBusTimeValue().get(), reqDtoGetDeviceInfo.getBusTimeUnit().get());
+        for (VoModbusAttribute voModbusAttribute : attributeModbusList) {
             //
             ResDtoGetDeviceTypeAttributeModbus resDtoGetDeviceTypeAttributeModbus = new ResDtoGetDeviceTypeAttributeModbus();
-            resDtoGetDeviceTypeAttributeModbus.setSlaveAddress(entityDeviceTypeAttributeModbus.getSlaveAddress());
-            resDtoGetDeviceTypeAttributeModbus.setRegisterAddress(entityDeviceTypeAttributeModbus.getRegisterAddress());
+            resDtoGetDeviceTypeAttributeModbus.setSlaveAddress(voModbusAttribute.getSlaveAddress());
+            resDtoGetDeviceTypeAttributeModbus.setRegisterAddress(voModbusAttribute.getRegisterAddress());
+            resDtoGetDeviceTypeAttributeModbus.setCode(voModbusAttribute.getCode());
             //
             list.add(resDtoGetDeviceTypeAttributeModbus);
         }

@@ -10,4 +10,5 @@ import lombok.Data;
 public class ResDtoGetDeviceTypeAttributeModbus extends BaseResDto {
     private int slaveAddress;
     private int registerAddress;
+    private String code;
 }

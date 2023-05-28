@@ -1,7 +1,7 @@
 package iot.cloud.backend.mapper.modules.device;
 
 import iot.cloud.backend.mapper.entity.EntityDeviceInfo;
-import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttributeModbus;
+import iot.cloud.backend.mapper.vo.VoModbusAttribute;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -43,11 +43,11 @@ public interface MapperDeviceInfo {
     @Select("select count(1) from device_info where code=#{code} and pwd=#{pwd}")
     int countByCodeAndPwd(@Param("code") String code, @Param("pwd") String pwd);
 
-    @Select("select dtam.slave_address as slaveAddress, dtam.register_address as registerAddress " +
-            "from device_info di , device_type_attribute_modbus dtam ,device_type dt " +
-            "where di.rel_device_type_id = dtam.rel_device_type_id and di.rel_device_type_id = dt.id " +
+    @Select("select dtam.slave_address as slaveAddress, dtam.register_address as registerAddress, dta.code " +
+            "from device_info di , device_type_attribute_modbus dtam ,device_type dt, device_type_attribute dta " +
+            "where di.rel_device_type_id = dtam.rel_device_type_id and di.rel_device_type_id = dt.id and dta.rel_device_type_id=dt.id and dta.id = dtam.rel_device_type_attribute_id " +
             "and di.code = #{code} and dt.bus_time_value = #{busTimeValue} and dt.bus_time_unit = #{busTimeUnit} ")
-    List<EntityDeviceTypeAttributeModbus> selectAttributeModbusByCodeAndTimeBus(
+    List<VoModbusAttribute> selectAttributeModbusByCodeAndTimeBus(
             @Param("code") String code,
             @Param("busTimeValue") Integer busTimeValue,
             @Param("busTimeUnit") Character busTimeUnit
