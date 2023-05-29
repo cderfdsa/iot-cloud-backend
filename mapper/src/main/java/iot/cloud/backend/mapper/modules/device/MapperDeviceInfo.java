@@ -52,4 +52,6 @@ public interface MapperDeviceInfo {
             @Param("busTimeValue") Integer busTimeValue,
             @Param("busTimeUnit") Character busTimeUnit
     );
+
+
 }

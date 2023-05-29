@@ -81,7 +81,7 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
                 log.debug("channelRead msgByteArr = {} >> heart ping", msgByteArr);
                 return;
             }
-            long value = Modbus4jUtils.readHoldingRegisterResInt(msgByteArr);
+            long value = Modbus4jUtils.readHoldingRegisterResLong(msgByteArr);
             log.info("channelRead value = {}", value);
             // publish to mqtt broker
             AttributeKey<TcpForMqttClient> tcpForMqttClientAttributeKey = AttributeKey.valueOf(KEY_MQTT_CLIENT);

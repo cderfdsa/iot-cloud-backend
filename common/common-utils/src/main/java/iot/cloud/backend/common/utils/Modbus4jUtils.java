@@ -122,13 +122,22 @@ public class Modbus4jUtils {
      * 读取保持寄存器数据，相当于功能码：03H-读保持寄存器
      * 读取long
      */
-    public static int readHoldingRegisterResInt(byte[] data) throws ModbusTransportException {
+    public static long readHoldingRegisterResLong(byte[] data) throws ModbusTransportException {
         ByteQueue byteQueue = new ByteQueue(data);
         ModbusResponse response = ModbusResponse.createModbusResponse(byteQueue);
         RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
         ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
         ReadHoldingRegistersResponse readHoldingRegistersResponse = (ReadHoldingRegistersResponse) rtuResponse.getModbusResponse();
-        return ByteUtils.bytesToInt(readHoldingRegistersResponse.getData(), ByteOrder.BIG_ENDIAN);
+        byte[] dataForValue = readHoldingRegistersResponse.getData();
+        if (dataForValue.length == 2) {
+            return ByteUtils.bytesToShort(dataForValue, ByteOrder.BIG_ENDIAN);
+        } else if (dataForValue.length == 4) {
+            return ByteUtils.bytesToInt(dataForValue, ByteOrder.BIG_ENDIAN);
+        } else if (dataForValue.length == 8) {
+            return ByteUtils.bytesToLong(dataForValue, ByteOrder.BIG_ENDIAN);
+        } else {
+            throw new ModbusTransportException();
+        }
     }
 
 

@@ -16,11 +16,12 @@ import java.util.Date;
 public class EntityHistoryDeviceAttribute implements Serializable {
     private Long id;
     private Long relUserInfoId;
-    private Long relDeviceTypeId;
+    private Long relDeviceInfoId;
     private String deviceName;
     private String deviceCode;
     private String deviceTypeName;
     private String deviceTypeAttributeName;
     private String deviceTypeAttributeCode;
     private Date createDt;
+    private Long value;
 }
