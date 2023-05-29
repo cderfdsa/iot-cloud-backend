@@ -27,7 +27,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title readCoilStatus
      * 读（线圈）开关量数据，相当于功能码：01H-读线圈状态
      */
     public static byte[] readCoilStatus(int slaveId, int offset, int numberOfRegister) throws ModbusTransportException {
@@ -36,7 +35,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title readInputStatus
      * 读取外围设备输入的开关量，相当于功能码：02H-读离散输入状态
      */
     public static byte[] readInputStatus(int slaveId, int offset, int numberOfRegister) throws ModbusTransportException {
@@ -54,7 +52,6 @@ public class Modbus4jUtils {
 
 
     /**
-     * @Title readInputRegisters
      * 读取外围设备输入的数据，相当于功能码：04H-读输入寄存器
      */
     public static byte[] readInputRegisters(int slaveId, int offset, int numberOfRegister) throws ModbusTransportException {
@@ -63,7 +60,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title writeCoil
      * 写单个（线圈）开关量数据，相当于功能码：05H-写单个线圈
      */
     public static byte[] writeCoil(int slaveId, int writeOffset, boolean writeValue) throws ModbusTransportException {
@@ -72,7 +68,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title writeCoils
      * 写多个开关量数据（线圈），相当于功能码：0FH-写多个线圈
      */
     public static byte[] writeCoils(int slaveId, int startOffset, boolean[] data) throws ModbusTransportException {
@@ -81,7 +76,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title writeHoldingRegister
      * 写单个保持寄存器，相当于功能码：06H-写单个保持寄存器
      */
     public static byte[] writeHoldingRegister(int slaveId, int writeOffset, short writeValue) throws ModbusTransportException {
@@ -90,7 +84,6 @@ public class Modbus4jUtils {
     }
 
     /**
-     * @Title writeHoldingRegisters
      * 写多个保持寄存器，相当于功能码：10H-写多个保持寄存器
      */
     public static byte[] writeHoldingRegisters(int slaveId, int startOffset, short[] data) throws ModbusTransportException {
@@ -98,8 +91,36 @@ public class Modbus4jUtils {
         return retBytesFromRequest(request);
     }
 
+
+    /**
+     * 读（线圈）开关量数据，相当于功能码：01H-读线圈状态
+     * 读取boolean
+     */
+    public static boolean readCoilStatusResBoolean(byte[] data, int whichIndex) throws ModbusTransportException {
+        ByteQueue byteQueue = new ByteQueue(data);
+        ModbusResponse response = ModbusResponse.createModbusResponse(byteQueue);
+        RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
+        ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
+        ReadCoilsResponse readCoilsResponse = (ReadCoilsResponse) rtuResponse.getModbusResponse();
+        return readCoilsResponse.getBooleanData()[whichIndex];
+    }
+
+    /**
+     * 读取外围设备输入的开关量，相当于功能码：02H-读离散输入状态
+     * 读取boolean
+     */
+    public static boolean readInputStatusResBoolean(byte[] data, int whichIndex) throws ModbusTransportException {
+        ByteQueue byteQueue = new ByteQueue(data);
+        ModbusResponse response = ModbusResponse.createModbusResponse(byteQueue);
+        RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
+        ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
+        ReadDiscreteInputsResponse readDiscreteInputsRequest = (ReadDiscreteInputsResponse) rtuResponse.getModbusResponse();
+        return readDiscreteInputsRequest.getBooleanData()[whichIndex];
+    }
+
     /**
      * 读取保持寄存器数据，相当于功能码：03H-读保持寄存器
+     * 读取long
      */
     public static int readHoldingRegisterResInt(byte[] data) throws ModbusTransportException {
         ByteQueue byteQueue = new ByteQueue(data);
@@ -107,7 +128,23 @@ public class Modbus4jUtils {
         RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
         ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
         ReadHoldingRegistersResponse readHoldingRegistersResponse = (ReadHoldingRegistersResponse) rtuResponse.getModbusResponse();
-        return ByteUtils.bytesToInt(readHoldingRegistersResponse.getData());
+        return ByteUtils.bytesToInt(readHoldingRegistersResponse.getData(), ByteOrder.BIG_ENDIAN);
     }
+
+
+    /**
+     * 读取外围设备输入的数据，相当于功能码：04H-读输入寄存器
+     * 读取long
+     */
+    public static long readInputRegistersResLong(byte[] data) throws ModbusTransportException {
+        ByteQueue byteQueue = new ByteQueue(data);
+        ModbusResponse response = ModbusResponse.createModbusResponse(byteQueue);
+        RtuMessageResponse rtuResponse = new RtuMessageResponse(response);
+        ModbusUtils.checkCRC(rtuResponse.getModbusMessage(), byteQueue);
+        ReadInputRegistersResponse readInputRegistersResponse = (ReadInputRegistersResponse) rtuResponse.getModbusResponse();
+        return ByteUtils.bytesToLong(readInputRegistersResponse.getData(), ByteOrder.BIG_ENDIAN);
+    }
+
+
 }
 

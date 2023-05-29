@@ -26,7 +26,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
     @Override
     @Cacheable(cacheManager = "cacheManagerForDevice", cacheNames = "auth", key = "#code")
     public boolean auth(String code, String pwd) {
-        return mapperDeviceInfo.countByCodeAndPwd(code, pwd) == 1;
+        int count = mapperDeviceInfo.countByCodeAndPwd(code, pwd);
+        return count == 1;
     }
 
     @Override

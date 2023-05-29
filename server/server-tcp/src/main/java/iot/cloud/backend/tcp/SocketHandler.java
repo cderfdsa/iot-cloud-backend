@@ -1,5 +1,6 @@
 package iot.cloud.backend.tcp;
 
+import com.alibaba.fastjson2.JSONObject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.AttributeKey;
@@ -8,9 +9,12 @@ import iot.cloud.backend.common.utils.Modbus4jUtils;
 import iot.cloud.backend.common.utils.StrUtils;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
+import iot.cloud.backend.tcp.mqtt.TcpForMqttClient;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executor;
 
 import static iot.cloud.backend.common.utils.constant.ConstantForTCP.*;
 import static iot.cloud.backend.tcp.TcpServerUtils.clients;
@@ -42,12 +46,21 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
                 String code = strArr[0];
                 String pwd = strArr[1];
                 DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
-                if (deviceInfoService.auth(code, pwd)) {
+                boolean auth = deviceInfoService.auth(code, pwd);
+                if (auth) {
                     ctx.channel().attr(AttributeKey.valueOf(KEY_CODE)).set(code);
                     ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(true);
                     ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
-                    // TODO connect to mqtt broker
-                    // TODO subscribe to mqtt broker
+                    // connect and subscribe to mqtt broker
+                    Executor tcpConnectMqttExecutor = SpringApplicationUtils.getBean("tcpConnectMqttExecutor", Executor.class);
+                    tcpConnectMqttExecutor.execute(() -> {
+                        try {
+                            TcpForMqttClient tcpForMqttClient = new TcpForMqttClient(ctx.channel(), code, pwd);
+                            ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(tcpForMqttClient);
+                        } catch (MqttException e) {
+                            log.error(e.getMessage(), e);
+                        }
+                    });
                 } else {
                     ctx.channel().close();
                     log.warn("auth fail = {},{}", code, pwd);
@@ -61,11 +74,19 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
             byte[] msgByteArr = (byte[]) msg;
             log.info("channelRead msg {}", HexUtils.encodeHexStr(msgByteArr));
             ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
-            // TODO publish to mqtt broker
+            //
             AttributeKey<String> attrCode = AttributeKey.valueOf(KEY_ATTR_CODE);
-            String attrCodeValue = ctx.channel().attr(attrCode).get();
-            int value = Modbus4jUtils.readHoldingRegisterResInt(msgByteArr);
+            String code = ctx.channel().attr(attrCode).get();
+            if (msgByteArr.length <= 4) {
+                log.debug("channelRead msgByteArr = {} >> heart ping", msgByteArr);
+                return;
+            }
+            long value = Modbus4jUtils.readHoldingRegisterResInt(msgByteArr);
             log.info("channelRead value = {}", value);
+            // publish to mqtt broker
+            AttributeKey<TcpForMqttClient> tcpForMqttClientAttributeKey = AttributeKey.valueOf(KEY_MQTT_CLIENT);
+            TcpForMqttClient tcpForMqttClient = ctx.channel().attr(tcpForMqttClientAttributeKey).get();
+            tcpForMqttClient.publishForDeviceAttribute(JSONObject.of(code, value));
         } else {
             log.error("channelRead error");
         }
@@ -79,11 +100,13 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
             ctx.channel().attr(AttributeKey.newInstance(KEY_REGISTER)).set(false);
             ctx.channel().attr(AttributeKey.newInstance(KEY_CAN_BUS)).set(false);
             ctx.channel().attr(AttributeKey.newInstance(KEY_ATTR_CODE)).set("");
+            ctx.channel().attr(AttributeKey.newInstance(KEY_MQTT_CLIENT)).set(null);
         } else {
             log.warn("handlerAdded exits");
             ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(false);
             ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(false);
             ctx.channel().attr(AttributeKey.valueOf(KEY_ATTR_CODE)).set("");
+            ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(null);
         }
         clients.add(ctx.channel());
     }
