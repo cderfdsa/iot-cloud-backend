@@ -15,4 +15,6 @@ public interface UserInfoService {
     ResResult<ResDtoGetUser> getUser();
 
     boolean authForMqtt(String account, String secret);
+
+    String refreshToken(String oldToken);
 }

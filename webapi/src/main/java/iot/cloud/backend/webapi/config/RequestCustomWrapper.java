@@ -85,11 +85,20 @@ public class RequestCustomWrapper extends HttpServletRequestWrapper {
     }
 
     public String getToken() {
-        Map<String, Object> jsonMap = (Map<String, Object>) JSON.parse(new String(body));
-        if (jsonMap == null || jsonMap.isEmpty()) {
-            return null;
+        try {
+            if (body != null) {
+                Map<String, Object> jsonMap = (Map<String, Object>) JSON.parse(new String(body));
+                if (jsonMap == null || jsonMap.isEmpty()) {
+                    return null;
+                }
+                return jsonMap.get("token").toString();
+            } else {
+                return "";
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return "";
         }
-        return jsonMap.get("token").toString();
     }
 }
 

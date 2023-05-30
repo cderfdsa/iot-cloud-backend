@@ -86,7 +86,11 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
             // publish to mqtt broker
             AttributeKey<TcpForMqttClient> tcpForMqttClientAttributeKey = AttributeKey.valueOf(KEY_MQTT_CLIENT);
             TcpForMqttClient tcpForMqttClient = ctx.channel().attr(tcpForMqttClientAttributeKey).get();
-            tcpForMqttClient.publishForDeviceAttribute(JSONObject.of(code, value));
+            if (tcpForMqttClient != null) {
+                tcpForMqttClient.publishForDeviceAttribute(JSONObject.of(code, value));
+            } else {
+                log.warn("publish to mqtt broker fail , because tcpForMqttClient is null. ");
+            }
         } else {
             log.error("channelRead error");
         }

@@ -13,7 +13,7 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${IOT_MYSQL_HOST:127.0.0.1}:${IOT_MYSQL_PORT:3306}/iot-cloud?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://${IOT_MYSQL_HOST:127.0.0.1}:${IOT_MYSQL_PORT:3306}/iot-cloud?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
     password: Aa0123
     # druid
@@ -57,6 +57,10 @@ spring:
       shutdown:
         await-termination: false
         await-termination-period: 10s
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 
 
@@ -82,3 +86,9 @@ iot:
         password: Aa0123
         timeout: 10
         keepalive: 30
+      file:
+        storage:
+          location: temp
+        url:
+          path: /uploads
+          full-path: http://127.0.0.1/uploads

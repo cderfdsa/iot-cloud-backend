@@ -16,4 +16,6 @@ public interface DeviceInfoService {
     ResResult<ResDtoGetDeviceInfo> get(ReqDtoGetDeviceInfo reqDtoGetDeviceInfo);
 
     ResResult<List<ResDtoGetDeviceTypeAttributeModbus>> getAttributeModbusByCodeAndTimeBus(ReqDtoGetDeviceInfo reqDtoGetDeviceInfo);
+
+    String getAccountByDeviceCode(String deviceCode);
 }

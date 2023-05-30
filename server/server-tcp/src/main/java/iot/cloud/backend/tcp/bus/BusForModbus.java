@@ -33,7 +33,7 @@ public class BusForModbus {
 
     @Scheduled(initialDelay = 30, timeUnit = TimeUnit.SECONDS, fixedRate = 10)
     public void handleSeconds10() {
-        log.info("handleSeconds10");
+        log.debug("handleSeconds10 start");
         AttributeKey<Boolean> register = AttributeKey.valueOf(KEY_REGISTER);
         AttributeKey<Boolean> canBus = AttributeKey.valueOf(KEY_CAN_BUS);
         for (Channel channel : TcpServerUtils.clients) {
@@ -83,5 +83,6 @@ public class BusForModbus {
                 log.warn("no register");
             }
         }
+        log.debug("handleSeconds10 end , clients size = {}", TcpServerUtils.clients.size());
     }
 }

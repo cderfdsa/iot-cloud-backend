@@ -87,4 +87,9 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
         //
         return resResult;
     }
+
+    @Override
+    public String getAccountByDeviceCode(String deviceCode) {
+        return mapperDeviceInfo.selectAccountByDeviceCode(deviceCode);
+    }
 }

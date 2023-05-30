@@ -53,5 +53,10 @@ public interface MapperDeviceInfo {
             @Param("busTimeUnit") Character busTimeUnit
     );
 
+    @Select("SELECT b.account from device_info a,user_info b " +
+            "where a.rel_user_info_id = b.id " +
+            "and a.code = #{deviceCode}")
+    String selectAccountByDeviceCode(@Param("deviceCode") String deviceCode);
+
 
 }

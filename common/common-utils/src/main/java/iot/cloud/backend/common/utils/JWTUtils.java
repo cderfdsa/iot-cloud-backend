@@ -2,6 +2,7 @@ package iot.cloud.backend.common.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import iot.cloud.backend.common.utils.exception.InvalidateTokenException;
 
 import java.time.Instant;
@@ -21,6 +22,17 @@ public class JWTUtils {
     public static Long getUserId(String token, String secret) {
         try {
             return JWT.require(Algorithm.HMAC256(secret)).build().verify(token).getClaim(NAME_USER_ID).asLong();
+        } catch (Exception exception) {
+            throw new InvalidateTokenException();
+        }
+    }
+
+    public static String createTokenByOld(String token, String secret, Integer expHours) {
+        try {
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
+            Long userId = decodedJWT.getClaim(NAME_USER_ID).asLong();
+            String account = decodedJWT.getClaim(NAME_ACCOUNT).asString();
+            return createToken(userId, account, secret, expHours);
         } catch (Exception exception) {
             throw new InvalidateTokenException();
         }

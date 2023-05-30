@@ -44,6 +44,7 @@ public class MqttReceiveServiceImpl implements MqttReceiveService {
                     String deviceCode = topic.split("/")[2];
                     JSONObject jsonObject = JSONUtils.parseObject(payload);
                     Set<String> keySet = jsonObject.keySet();
+                    // TODO 可优化成批量插入
                     for (String attributeCode : keySet) {
                         long value = jsonObject.getLongValue(attributeCode);
                         historyDeviceAttributeService.add(deviceCode, attributeCode, value);

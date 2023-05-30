@@ -12,8 +12,13 @@ public class RequestCustomFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (servletRequest instanceof HttpServletRequest) {
-            ServletRequest requestWrapper = new RequestCustomWrapper((HttpServletRequest) servletRequest);
-            filterChain.doFilter(requestWrapper, servletResponse);
+            String contentType = servletRequest.getContentType();
+            if (contentType != null && contentType.contains("application/json")) {
+                ServletRequest requestWrapper = new RequestCustomWrapper((HttpServletRequest) servletRequest);
+                filterChain.doFilter(requestWrapper, servletResponse);
+            } else {
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

@@ -6,10 +6,7 @@ import iot.cloud.backend.service.dto.ResDtoLoginOrRegister;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author weichuang
@@ -28,6 +25,11 @@ public class UserController {
     @PostMapping(value = "/getUser")
     public ResResult<ResDtoGetUser> getUser() {
         return userInfoService.getUser();
+    }
+
+    @GetMapping("/ns/token/refresh")
+    public ResResult<String> refreshToken(@RequestParam("oldToken") String oldToken) {
+        return new ResResult<>(userInfoService.refreshToken(oldToken));
     }
 
 

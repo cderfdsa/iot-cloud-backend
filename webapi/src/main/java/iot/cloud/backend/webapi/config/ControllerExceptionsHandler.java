@@ -5,6 +5,7 @@ import iot.cloud.backend.common.utils.exception.ParametersIncompleteException;
 import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.result.ResultCodeCommon;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,6 +25,12 @@ public class ControllerExceptionsHandler {
     @ExceptionHandler(value = {ParametersIncompleteException.class})
     @ResponseBody
     public ResResult<?> parametersIncompleteException(ParametersIncompleteException exception) {
+        return ResultCodeCommon.PARAMETERS_INCOMPLETE;
+    }
+
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class})
+    @ResponseBody
+    public ResResult<?> missingServletRequestParameterException(MissingServletRequestParameterException exception) {
         return ResultCodeCommon.PARAMETERS_INCOMPLETE;
     }
 

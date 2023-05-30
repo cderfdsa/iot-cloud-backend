@@ -1,5 +1,6 @@
 package iot.cloud.backend.mqtt;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
 import com.hivemq.extension.sdk.api.auth.SimpleAuthenticator;
 import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthInput;
@@ -12,6 +13,7 @@ import iot.cloud.backend.service.dto.ReqDtoGetDeviceInfo;
 import iot.cloud.backend.service.dto.ResDtoGetDeviceInfo;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
 import iot.cloud.backend.service.modules.history.HistoryDeviceOnlineService;
+import iot.cloud.backend.service.modules.mqtt.MqttSendService;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
@@ -39,17 +41,22 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
             return;
         }
         if (clientId.startsWith("device:")) {
+            String deviceCode = username;
             DeviceInfoService deviceInfoService = SpringApplicationUtils.getApplicationContext().getBean(DeviceInfoService.class);
-            if (deviceInfoService.auth(username, password)) {
+            if (deviceInfoService.auth(deviceCode, password)) {
+                //
                 simpleAuthOutput.authenticateSuccessfully();
                 //
-                addHistoryDeviceOnlineSuccess(username);
+                publishUserDeviceOnlineSuccess(deviceCode);
+                //
+                addHistoryDeviceOnlineSuccess(deviceCode);
             } else {
                 simpleAuthOutput.failAuthentication();
             }
         } else if (clientId.startsWith("account:")) {
+            String account = username;
             UserInfoService userInfoService = SpringApplicationUtils.getApplicationContext().getBean(UserInfoService.class);
-            if (userInfoService.authForMqtt(username, password)) {
+            if (userInfoService.authForMqtt(account, password)) {
                 simpleAuthOutput.authenticateSuccessfully();
             } else {
                 simpleAuthOutput.failAuthentication();
@@ -64,6 +71,13 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
         } else {
             simpleAuthOutput.failAuthentication("clientId starts with 'device:'");
         }
+    }
+
+    private void publishUserDeviceOnlineSuccess(String deviceCode) {
+        DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
+        String account = deviceInfoService.getAccountByDeviceCode(deviceCode);
+        MqttSendService mqttSendService = SpringApplicationUtils.getBean(MqttSendService.class);
+        mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, "1").toString());
     }
 
     private void addHistoryDeviceOnlineSuccess(String deviceCode) {

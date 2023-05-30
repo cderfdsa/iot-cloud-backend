@@ -1,5 +1,6 @@
 package iot.cloud.backend.service.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -7,6 +8,10 @@ import lombok.Data;
  */
 @Data
 public class ReqDtoLoginOrRegister {
+    @NotNull
     private String email;
+    @NotNull
     private String validateCode;
+
+    private Integer day30 = 0;
 }

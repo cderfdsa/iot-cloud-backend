@@ -22,14 +22,16 @@ public class LogInterceptor implements HandlerInterceptor {
         //
         threadLocalForTime.set(System.currentTimeMillis());
         //
-        log.info("Request uri = [{}], method is: [{}]", request.getRequestURI(), request.getMethod());
-        log.info("Request header is : [{}]", parseRequestHeaders(request));
-        log.info("Request param is : [{}]", parseRequestParams(request));
+        log.debug("Request uri = [{}], method is: [{}]", request.getRequestURI(), request.getMethod());
+        log.debug("Request header is : [{}]", parseRequestHeaders(request));
+        log.debug("Request param is : [{}]", parseRequestParams(request));
         //
         if (request instanceof RequestCustomWrapper) {
             RequestCustomWrapper requestCustomWrapper = (RequestCustomWrapper) request;
             byte[] body = requestCustomWrapper.getBody();
-            log.info("Request body is : [{}]", new String(body));
+            if (body != null) {
+                log.debug("Request body is : [{}]", new String(body));
+            }
         }
         //
         return true;
@@ -38,11 +40,10 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        log.info("Response uri = [{}], method is: [{}]", request.getRequestURI(), request.getMethod());
-        log.info("Response header is : [{}]", parseResponseHeaders(response));
-//        log.info("Response param is : [{}]", parseParams(request));
-        long timems = System.currentTimeMillis() - threadLocalForTime.get();
-        log.info("request -> response time(ms) = {}", timems);
+        log.debug("Response uri = [{}], method is: [{}]", request.getRequestURI(), request.getMethod());
+        log.debug("Response header is : [{}]", parseResponseHeaders(response));
+        long times = System.currentTimeMillis() - threadLocalForTime.get();
+        log.debug("request -> response time(ms) = {}", times);
     }
 
     private String parseRequestParams(HttpServletRequest request) {

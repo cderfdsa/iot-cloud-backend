@@ -62,3 +62,9 @@
 /device/${device.code}/attributes/res/d
 /account/${user.account}/${device.code}/attributes/req/u
 /account/${user.account}/${device.code}/attributes/res/d
+
+### 关于时区
+
+- 数据库时区设置为东八区
+- 数据库连接URL设置为东八区
+- backend所在服务器设置为东八区

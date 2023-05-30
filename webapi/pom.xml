@@ -24,5 +24,10 @@
             <artifactId>service</artifactId>
         </dependency>
         <!-- 三方依赖配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
