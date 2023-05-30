@@ -16,13 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 public class HiveMqEmbeddedExtensionMain implements ExtensionMain {
     @Override
     public void extensionStart(@NotNull ExtensionStartInput extensionStartInput, @NotNull ExtensionStartOutput extensionStartOutput) {
-        log.info("extensionStart,{},{}", extensionStartInput, extensionStartOutput);
+        log.info("extensionStart start");
         Services.securityRegistry().setAuthenticatorProvider(new ConnectProvider());
         Services.securityRegistry().setAuthorizerProvider(new PublishAndSubscriptionProvider());
+        Services.eventRegistry().setClientLifecycleEventListener(new MyClientLifecycleEventListenerProvider());
+        log.info("extensionStart end");
     }
 
     @Override
     public void extensionStop(@NotNull ExtensionStopInput extensionStopInput, @NotNull ExtensionStopOutput extensionStopOutput) {
-        log.info("extensionStop,{},{}", extensionStopInput, extensionStopOutput);
+        log.info("extensionStop start");
+        log.info("extensionStop end");
     }
 }

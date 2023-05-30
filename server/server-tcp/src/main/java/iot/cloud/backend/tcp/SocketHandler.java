@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executor;
 
 import static iot.cloud.backend.common.utils.constant.ConstantForTCP.*;
 import static iot.cloud.backend.tcp.TcpServerUtils.clients;
@@ -52,15 +51,13 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
                     ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(true);
                     ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(true);
                     // connect and subscribe to mqtt broker
-                    Executor tcpConnectMqttExecutor = SpringApplicationUtils.getBean("tcpConnectMqttExecutor", Executor.class);
-                    tcpConnectMqttExecutor.execute(() -> {
-                        try {
-                            TcpForMqttClient tcpForMqttClient = new TcpForMqttClient(ctx.channel(), code, pwd);
-                            ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(tcpForMqttClient);
-                        } catch (MqttException e) {
-                            log.error(e.getMessage(), e);
-                        }
-                    });
+                    try {
+                        TcpForMqttClient tcpForMqttClient = new TcpForMqttClient(ctx.channel(), code, pwd);
+                        ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(tcpForMqttClient);
+                    } catch (MqttException e) {
+                        log.error("connect and subscribe to mqtt broker");
+                        log.error(e.getMessage(), e);
+                    }
                 } else {
                     ctx.channel().close();
                     log.warn("auth fail = {},{}", code, pwd);
@@ -100,18 +97,10 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         //
         log.info("handlerAdded ID,{}", ctx.channel().id().asShortText());
-        if (!AttributeKey.exists(KEY_REGISTER)) {
-            ctx.channel().attr(AttributeKey.newInstance(KEY_REGISTER)).set(false);
-            ctx.channel().attr(AttributeKey.newInstance(KEY_CAN_BUS)).set(false);
-            ctx.channel().attr(AttributeKey.newInstance(KEY_ATTR_CODE)).set("");
-            ctx.channel().attr(AttributeKey.newInstance(KEY_MQTT_CLIENT)).set(null);
-        } else {
-            log.warn("handlerAdded exits");
-            ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(false);
-            ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(false);
-            ctx.channel().attr(AttributeKey.valueOf(KEY_ATTR_CODE)).set("");
-            ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(null);
-        }
+        ctx.channel().attr(AttributeKey.valueOf(KEY_REGISTER)).set(false);
+        ctx.channel().attr(AttributeKey.valueOf(KEY_CAN_BUS)).set(false);
+        ctx.channel().attr(AttributeKey.valueOf(KEY_ATTR_CODE)).set("");
+        ctx.channel().attr(AttributeKey.valueOf(KEY_MQTT_CLIENT)).set(null);
         clients.add(ctx.channel());
     }
 
@@ -120,7 +109,15 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
         //
         log.info("handlerRemoved ID,{}", ctx.channel().id().asShortText());
         clients.remove(ctx.channel());
-        // TODO disconnect to mqtt broker
+        // disconnect to mqtt broker
+        AttributeKey<TcpForMqttClient> tcpForMqttClientAttributeKey = AttributeKey.valueOf(KEY_MQTT_CLIENT);
+        TcpForMqttClient tcpForMqttClient = ctx.channel().attr(tcpForMqttClientAttributeKey).get();
+        if (tcpForMqttClient != null) {
+            tcpForMqttClient.getMqttClient().disconnect();
+            tcpForMqttClient.getMqttClient().close();
+        } else {
+            log.warn("disconnect to mqtt broker fail , because tcpForMqttClient is null. ");
+        }
     }
 
     @Override

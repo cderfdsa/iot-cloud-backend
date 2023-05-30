@@ -8,14 +8,10 @@ import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthOutput;
 import iot.cloud.backend.common.utils.constant.ConstantForStatus;
 import iot.cloud.backend.common.utils.constant.ConstantForStatusReason;
 import iot.cloud.backend.config.ConfigForHiveMq;
-import iot.cloud.backend.service.dto.ReqDtoAddHistoryDeviceOnline;
-import iot.cloud.backend.service.dto.ReqDtoGetDeviceInfo;
-import iot.cloud.backend.service.dto.ResDtoGetDeviceInfo;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
 import iot.cloud.backend.service.modules.history.HistoryDeviceOnlineService;
 import iot.cloud.backend.service.modules.mqtt.MqttSendService;
 import iot.cloud.backend.service.modules.user.UserInfoService;
-import iot.cloud.backend.service.result.ResResult;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,9 +43,9 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
                 //
                 simpleAuthOutput.authenticateSuccessfully();
                 //
-                publishUserDeviceOnlineSuccess(deviceCode);
+                publishUserDeviceOnline(deviceCode);
                 //
-                addHistoryDeviceOnlineSuccess(deviceCode);
+                addHistoryDeviceOnline(deviceCode);
             } else {
                 simpleAuthOutput.failAuthentication();
             }
@@ -73,28 +69,15 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
         }
     }
 
-    private void publishUserDeviceOnlineSuccess(String deviceCode) {
+    private void publishUserDeviceOnline(String deviceCode) {
         DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
         String account = deviceInfoService.getAccountByDeviceCode(deviceCode);
         MqttSendService mqttSendService = SpringApplicationUtils.getBean(MqttSendService.class);
         mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, "1").toString());
     }
 
-    private void addHistoryDeviceOnlineSuccess(String deviceCode) {
-        //
-        ReqDtoAddHistoryDeviceOnline reqDtoAddHistoryDeviceOnline = new ReqDtoAddHistoryDeviceOnline();
-        //
-        DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
-        ResResult<ResDtoGetDeviceInfo> resResult = deviceInfoService.get(new ReqDtoGetDeviceInfo(deviceCode));
-        //
-        reqDtoAddHistoryDeviceOnline.setDeviceCode(deviceCode);
-        reqDtoAddHistoryDeviceOnline.setDeviceName(resResult.getData().getName());
-        reqDtoAddHistoryDeviceOnline.setRelUserInfoId(resResult.getData().getRelUserInfoId());
-        reqDtoAddHistoryDeviceOnline.setRelDeviceInfoId(resResult.getData().getId());
-        reqDtoAddHistoryDeviceOnline.setStatus(ConstantForStatus.ONLINE);
-        reqDtoAddHistoryDeviceOnline.setStatusReason(ConstantForStatusReason.OK);
-        //
+    private void addHistoryDeviceOnline(String deviceCode) {
         HistoryDeviceOnlineService historyDeviceOnlineService = SpringApplicationUtils.getBean(HistoryDeviceOnlineService.class);
-        historyDeviceOnlineService.add(reqDtoAddHistoryDeviceOnline);
+        historyDeviceOnlineService.add(deviceCode, ConstantForStatus.ONLINE, ConstantForStatusReason.OK);
     }
 }

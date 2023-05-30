@@ -11,5 +11,5 @@ import org.springframework.messaging.handler.annotation.Header;
 @MessagingGateway
 public interface MqttMessagingGateway {
     @Gateway(requestChannel = "mqttOutboundChannel")
-    void send(@Header(MqttHeaders.TOPIC) String topic, String message);
+    void send(@Header(MqttHeaders.TOPIC) String topic, String payload);
 }

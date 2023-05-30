@@ -1,11 +1,10 @@
 package iot.cloud.backend.service.modules.history.impl;
 
+import iot.cloud.backend.mapper.entity.EntityDeviceInfo;
 import iot.cloud.backend.mapper.entity.EntityHistoryDeviceOnline;
+import iot.cloud.backend.mapper.modules.device.MapperDeviceInfo;
 import iot.cloud.backend.mapper.modules.history.MapperHistoryDeviceOnline;
-import iot.cloud.backend.service.dto.ReqDtoAddHistoryDeviceOnline;
-import iot.cloud.backend.service.dto.ResDtoAdd;
 import iot.cloud.backend.service.modules.history.HistoryDeviceOnlineService;
-import iot.cloud.backend.service.result.ResResult;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -16,25 +15,23 @@ import org.springframework.stereotype.Service;
 public class HistoryDeviceOnlineServiceImpl implements HistoryDeviceOnlineService {
     @Resource
     private MapperHistoryDeviceOnline mapperHistoryDeviceOnline;
+    @Resource
+    private MapperDeviceInfo mapperDeviceInfo;
+
 
     @Override
-    public ResResult<ResDtoAdd> add(ReqDtoAddHistoryDeviceOnline reqDtoAddHistoryDeviceOnline) {
+    public void add(String deviceCode, Integer onOrOff, Integer statusReason) {
         //
-        ResResult<ResDtoAdd> resResult = new ResResult<>();
-        ResDtoAdd resDtoAdd = new ResDtoAdd();
-        resResult.setData(resDtoAdd);
+        EntityDeviceInfo entityDeviceInfo = mapperDeviceInfo.selectByCode(deviceCode);
         //
         EntityHistoryDeviceOnline entityHistoryDeviceOnline = new EntityHistoryDeviceOnline();
-        entityHistoryDeviceOnline.setRelUserInfoId(reqDtoAddHistoryDeviceOnline.getRelUserInfoId());
-        entityHistoryDeviceOnline.setRelDeviceInfoId(reqDtoAddHistoryDeviceOnline.getRelDeviceInfoId());
-        entityHistoryDeviceOnline.setDeviceName(reqDtoAddHistoryDeviceOnline.getDeviceName());
-        entityHistoryDeviceOnline.setDeviceCode(reqDtoAddHistoryDeviceOnline.getDeviceCode());
-        entityHistoryDeviceOnline.setStatus(reqDtoAddHistoryDeviceOnline.getStatus());
-        entityHistoryDeviceOnline.setStatusReason(reqDtoAddHistoryDeviceOnline.getStatusReason());
+        entityHistoryDeviceOnline.setRelUserInfoId(entityDeviceInfo.getRelUserInfoId());
+        entityHistoryDeviceOnline.setRelDeviceInfoId(entityDeviceInfo.getId());
+        entityHistoryDeviceOnline.setDeviceName(entityDeviceInfo.getName());
+        entityHistoryDeviceOnline.setDeviceCode(entityDeviceInfo.getCode());
+        entityHistoryDeviceOnline.setStatus(onOrOff);
+        entityHistoryDeviceOnline.setStatusReason(statusReason);
         //
         mapperHistoryDeviceOnline.insert(entityHistoryDeviceOnline);
-        resDtoAdd.setId(entityHistoryDeviceOnline.getId());
-        //
-        return resResult;
     }
 }

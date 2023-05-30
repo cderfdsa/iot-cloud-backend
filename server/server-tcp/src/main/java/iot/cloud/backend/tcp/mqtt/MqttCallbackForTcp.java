@@ -26,6 +26,7 @@ public class MqttCallbackForTcp implements MqttCallback {
 
     @Override
     public void connectionLost(Throwable cause) {
+        log.error("channel ID = {} , deviceCode = {}", channel.id().asShortText(), deviceCode);
         log.error(cause.getMessage(), cause);
     }
 

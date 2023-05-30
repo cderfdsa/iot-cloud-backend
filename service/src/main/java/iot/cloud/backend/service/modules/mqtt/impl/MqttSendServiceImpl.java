@@ -3,6 +3,7 @@ package iot.cloud.backend.service.modules.mqtt.impl;
 import iot.cloud.backend.service.modules.mqtt.MqttMessagingGateway;
 import iot.cloud.backend.service.modules.mqtt.MqttSendService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Lazy
 @Service
+@Slf4j
 public class MqttSendServiceImpl implements MqttSendService {
 
     @Resource
@@ -28,8 +30,10 @@ public class MqttSendServiceImpl implements MqttSendService {
     }
 
     @Override
-    public void sendToAccountOnline(String account, String message) {
-        mqttMessagingGateway.send("/account/" + account + "/online/d", message);
+    public void sendToAccountOnline(String account, String payload) {
+        String topic = "/account/" + account + "/online/d";
+        log.debug("topic = {} , payload = {}", topic, payload);
+        mqttMessagingGateway.send(topic, payload);
     }
 
     @Override
