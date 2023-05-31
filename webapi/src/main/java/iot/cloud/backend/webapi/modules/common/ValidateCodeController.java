@@ -27,7 +27,7 @@ public class ValidateCodeController {
     private DeviceInfoService deviceInfoService;
 
     @PostMapping(value = "/sendEmail")
-    public ResResult<ResDtoValidateCode> add(@Valid @RequestBody ReqDtoValidateCode reqDtoValidateCode, BindingResult bindingResult) {
+    public ResResult<ResDtoValidateCode> sendEmail(@Valid @RequestBody ReqDtoValidateCode reqDtoValidateCode, BindingResult bindingResult) {
         try {
             SphU.entry("validateCode");
         } catch (Exception e) {

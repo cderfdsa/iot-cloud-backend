@@ -13,5 +13,5 @@ public class ReqDtoLoginOrRegister {
     @NotNull
     private String validateCode;
 
-    private Integer day30 = 0;
+    private boolean day30 = false;
 }

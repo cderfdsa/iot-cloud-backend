@@ -25,8 +25,10 @@ public class MqttSendServiceImpl implements MqttSendService {
     }
 
     @Override
-    public void sendToAccountDevice(String account, String deviceCode, String message) {
-        mqttMessagingGateway.send("/account/" + account + "/" + deviceCode + "/attributes/d", message);
+    public void sendToAccountDevice(String account, String deviceCode, String payload) {
+        String topic = "/account/" + account + "/" + deviceCode + "/attributes/d";
+        log.debug("topic = {} , payload = {}", topic, payload);
+        mqttMessagingGateway.send(topic, payload);
     }
 
     @Override

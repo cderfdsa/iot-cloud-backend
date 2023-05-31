@@ -10,4 +10,5 @@ public class ResultCodeCommon {
     public static ResResult PARAMETERS_INCOMPLETE = new ResResult<>(1005, "parameters incomplete");
     public static ResResult VALIDATE_CODE_ERROR = new ResResult<>(1007, "validate code error");
     public static ResResult FREQUENCY_TOO_HIGH = new ResResult<>(1009, "frequency too high");
+    public static ResResult PARAMETERS_VALUE_ERROR = new ResResult<>(1005, "parameters value error");
 }

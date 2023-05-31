@@ -65,7 +65,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         resDtoLoginOrRegister.setUser_id(entityUserInfo.getId());
         resDtoLoginOrRegister.setEmail(entityUserInfo.getEmail());
         resDtoLoginOrRegister.setAccount(entityUserInfo.getAccount());
-        if (reqDtoLoginOrRegister.getDay30() == 1) {
+        if (reqDtoLoginOrRegister.isDay30()) {
             resDtoLoginOrRegister.setToken(JWTUtils.createToken(entityUserInfo.getId(), entityUserInfo.getEmail(), configForJWT.getSecret(), 24 * 30));
         } else {
             resDtoLoginOrRegister.setToken(JWTUtils.createToken(entityUserInfo.getId(), entityUserInfo.getEmail(), configForJWT.getSecret(), configForJWT.getExpHours()));

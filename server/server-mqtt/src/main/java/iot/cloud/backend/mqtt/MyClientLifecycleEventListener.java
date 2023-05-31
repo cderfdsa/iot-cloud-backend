@@ -24,27 +24,31 @@ public class MyClientLifecycleEventListener implements ClientLifecycleEventListe
 
     @Override
     public void onMqttConnectionStart(@NotNull ConnectionStartInput connectionStartInput) {
-        log.info("running");
         ConnectPacket connectPacket = connectionStartInput.getConnectPacket();
         clientId = connectPacket.getClientId();
         username = connectPacket.getUserName().orElse("");
+        log.info("clientId = {} , username = {}", clientId, username);
     }
 
     @Override
     public void onAuthenticationSuccessful(@NotNull AuthenticationSuccessfulInput authenticationSuccessfulInput) {
-        log.info("running");
-        // TODO if device publish online to account
-        // TODO if device insert history online
+        log.info("clientId = {} , username = {}", clientId, username);
+        // if device publish online to account
+        // if device insert history online
+        if (clientId.startsWith("device:")) {
+            publishUserDeviceOnOrOffline(username, ConstantForStatus.ONLINE);
+            addHistoryDeviceOnOrOffline(username, ConstantForStatus.ONLINE);
+        }
     }
 
     @Override
     public void onDisconnect(@NotNull DisconnectEventInput disconnectEventInput) {
-        log.info("running");
+        log.debug("{} offline , reasonCode = {} , reasonString = {}", username, disconnectEventInput.getReasonCode(), disconnectEventInput.getReasonString());
         // if device publish offline to account
         // if device insert history offline
         if (clientId.startsWith("device:")) {
-            publishUserDeviceOffline(username);
-            addHistoryDeviceOffline(username);
+            publishUserDeviceOnOrOffline(username, ConstantForStatus.OFFLINE);
+            addHistoryDeviceOnOrOffline(username, ConstantForStatus.OFFLINE);
         }
     }
 
@@ -68,15 +72,15 @@ public class MyClientLifecycleEventListener implements ClientLifecycleEventListe
         ClientLifecycleEventListener.super.onServerInitiatedDisconnect(serverInitiatedDisconnectInput);
     }
 
-    private void publishUserDeviceOffline(String deviceCode) {
+    private void publishUserDeviceOnOrOffline(String deviceCode, Integer onOrOff) {
         DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
         String account = deviceInfoService.getAccountByDeviceCode(deviceCode);
         MqttSendService mqttSendService = SpringApplicationUtils.getBean(MqttSendService.class);
-        mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, "2").toString());
+        mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, onOrOff).toString());
     }
 
-    private void addHistoryDeviceOffline(String deviceCode) {
+    private void addHistoryDeviceOnOrOffline(String deviceCode, Integer onOrOff) {
         HistoryDeviceOnlineService historyDeviceOnlineService = SpringApplicationUtils.getBean(HistoryDeviceOnlineService.class);
-        historyDeviceOnlineService.add(deviceCode, ConstantForStatus.OFFLINE, ConstantForStatusReason.OK);
+        historyDeviceOnlineService.add(deviceCode, onOrOff, ConstantForStatusReason.OK);
     }
 }

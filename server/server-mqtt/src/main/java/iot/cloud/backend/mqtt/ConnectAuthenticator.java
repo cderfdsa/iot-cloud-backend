@@ -1,16 +1,11 @@
 package iot.cloud.backend.mqtt;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
 import com.hivemq.extension.sdk.api.auth.SimpleAuthenticator;
 import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthInput;
 import com.hivemq.extension.sdk.api.auth.parameter.SimpleAuthOutput;
-import iot.cloud.backend.common.utils.constant.ConstantForStatus;
-import iot.cloud.backend.common.utils.constant.ConstantForStatusReason;
 import iot.cloud.backend.config.ConfigForHiveMq;
 import iot.cloud.backend.service.modules.device.DeviceInfoService;
-import iot.cloud.backend.service.modules.history.HistoryDeviceOnlineService;
-import iot.cloud.backend.service.modules.mqtt.MqttSendService;
 import iot.cloud.backend.service.modules.user.UserInfoService;
 import iot.cloud.backend.service.utils.SpringApplicationUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +37,6 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
             if (deviceInfoService.auth(deviceCode, password)) {
                 //
                 simpleAuthOutput.authenticateSuccessfully();
-                //
-                publishUserDeviceOnline(deviceCode);
-                //
-                addHistoryDeviceOnline(deviceCode);
             } else {
                 simpleAuthOutput.failAuthentication();
             }
@@ -67,17 +58,5 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
         } else {
             simpleAuthOutput.failAuthentication("clientId starts with 'device:'");
         }
-    }
-
-    private void publishUserDeviceOnline(String deviceCode) {
-        DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
-        String account = deviceInfoService.getAccountByDeviceCode(deviceCode);
-        MqttSendService mqttSendService = SpringApplicationUtils.getBean(MqttSendService.class);
-        mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, "1").toString());
-    }
-
-    private void addHistoryDeviceOnline(String deviceCode) {
-        HistoryDeviceOnlineService historyDeviceOnlineService = SpringApplicationUtils.getBean(HistoryDeviceOnlineService.class);
-        historyDeviceOnlineService.add(deviceCode, ConstantForStatus.ONLINE, ConstantForStatusReason.OK);
     }
 }
