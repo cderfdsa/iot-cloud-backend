@@ -50,7 +50,7 @@ public class HistoryDeviceAttributeServiceImpl implements HistoryDeviceAttribute
 
     @Override
     public ResResult<List<ResDtoDayCount>> statisticsDayForCount() {
-        List<VoDayCount> listVos = mapperHistoryDeviceAttribute.limitGroupCreateDtByUserInfoId(UserUtils.getCurrentRequestUserId(), 10);
+        List<VoDayCount> listVos = mapperHistoryDeviceAttribute.limitGroupCreateDtByUserInfoId(UserUtils.getCurrentRequestUserId(), 30);
         List<ResDtoDayCount> list = new ArrayList<>(listVos.size());
         for (VoDayCount voDayCount : listVos) {
             list.add(new ResDtoDayCount(voDayCount.getDay(), voDayCount.getCount()));

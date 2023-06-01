@@ -14,7 +14,7 @@ public interface MapperUserInfo {
     @Select("select id,email,account from user_info where email=#{email}")
     EntityUserInfo selectByEmail(@Param("email") String email);
 
-    @Select("select id,email,account from user_info where id=#{id}")
+    @Select("select id,email,account,secret from user_info where id=#{id}")
     EntityUserInfo selectById(@Param("id") Long id);
 
     @Insert("insert into " +

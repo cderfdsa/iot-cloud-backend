@@ -81,7 +81,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         EntityUserInfo entityUserInfo = mapperUserInfo.selectById(UserUtils.getCurrentRequestUserId());
         ResDtoGetUser resDtoGetUser = new ResDtoGetUser();
         resDtoGetUser.setUserId(entityUserInfo.getId());
+        resDtoGetUser.setAccount(entityUserInfo.getAccount());
         resDtoGetUser.setEmail(entityUserInfo.getEmail());
+        resDtoGetUser.setSecret(entityUserInfo.getSecret());
         return new ResResult<>(resDtoGetUser);
     }
 

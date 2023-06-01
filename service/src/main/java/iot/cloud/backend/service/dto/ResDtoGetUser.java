@@ -9,5 +9,7 @@ import lombok.Data;
 @Data
 public class ResDtoGetUser extends BaseResDto {
     private Long userId;
+    private String account;
     private String email;
+    private String secret;
 }

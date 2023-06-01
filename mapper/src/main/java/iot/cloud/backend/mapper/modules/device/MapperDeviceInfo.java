@@ -60,13 +60,13 @@ public interface MapperDeviceInfo {
 
     @Select("select count(1) from device_info \n" +
             "where rel_user_info_id = #{relUserInfoId}\n" +
-            "union \n" +
+            "union all\n" +
             "select count(1) from device_info \n" +
             "where rel_user_info_id = #{relUserInfoId} and online_status = 1\n" +
-            "union \n" +
+            "union all\n" +
             "select count(1) from device_info \n" +
             "where rel_user_info_id = #{relUserInfoId} and online_status = 2\n" +
-            "union \n" +
+            "union all\n" +
             "select count(1) from device_info \n" +
             "where rel_user_info_id = #{relUserInfoId} and alarm_status  = 1")
     List<Integer> countManyStatus(@Param("relUserInfoId") Long relUserInfoId);
