@@ -58,5 +58,18 @@ public interface MapperDeviceInfo {
             "and a.code = #{deviceCode}")
     String selectAccountByDeviceCode(@Param("deviceCode") String deviceCode);
 
+    @Select("select count(1) from device_info \n" +
+            "where rel_user_info_id = #{relUserInfoId}\n" +
+            "union \n" +
+            "select count(1) from device_info \n" +
+            "where rel_user_info_id = #{relUserInfoId} and online_status = 1\n" +
+            "union \n" +
+            "select count(1) from device_info \n" +
+            "where rel_user_info_id = #{relUserInfoId} and online_status = 2\n" +
+            "union \n" +
+            "select count(1) from device_info \n" +
+            "where rel_user_info_id = #{relUserInfoId} and alarm_status  = 1")
+    List<Integer> countManyStatus(@Param("relUserInfoId") Long relUserInfoId);
+
 
 }

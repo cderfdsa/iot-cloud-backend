@@ -92,4 +92,9 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
     public String getAccountByDeviceCode(String deviceCode) {
         return mapperDeviceInfo.selectAccountByDeviceCode(deviceCode);
     }
+
+    @Override
+    public ResResult<List<Integer>> statisticsManyDeviceStatus() {
+        return new ResResult<>(mapperDeviceInfo.countManyStatus(UserUtils.getCurrentRequestUserId()));
+    }
 }

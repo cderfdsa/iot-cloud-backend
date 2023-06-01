@@ -18,4 +18,6 @@ public interface DeviceInfoService {
     ResResult<List<ResDtoGetDeviceTypeAttributeModbus>> getAttributeModbusByCodeAndTimeBus(ReqDtoGetDeviceInfo reqDtoGetDeviceInfo);
 
     String getAccountByDeviceCode(String deviceCode);
+
+    ResResult<List<Integer>> statisticsManyDeviceStatus();
 }

@@ -31,6 +31,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         //
         if (StringUtils.isNotEmpty(headerToken)) {
             Long userId = JWTUtils.getUserId(headerToken, configForJWT.getSecret());
+            UserUtils.saveUserId(userId);
         } else {
             if (request instanceof RequestCustomWrapper) {
                 RequestCustomWrapper requestCustomWrapper = (RequestCustomWrapper) request;

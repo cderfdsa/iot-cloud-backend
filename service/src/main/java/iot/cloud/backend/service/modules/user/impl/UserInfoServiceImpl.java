@@ -80,7 +80,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public ResResult<ResDtoGetUser> getUser() {
         EntityUserInfo entityUserInfo = mapperUserInfo.selectById(UserUtils.getCurrentRequestUserId());
         ResDtoGetUser resDtoGetUser = new ResDtoGetUser();
-        resDtoGetUser.setUser_id(entityUserInfo.getId());
+        resDtoGetUser.setUserId(entityUserInfo.getId());
         resDtoGetUser.setEmail(entityUserInfo.getEmail());
         return new ResResult<>(resDtoGetUser);
     }

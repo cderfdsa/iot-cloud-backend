@@ -1,6 +1,7 @@
 package iot.cloud.backend.mapper.modules.history;
 
 import iot.cloud.backend.mapper.entity.EntityHistoryDeviceAttribute;
+import iot.cloud.backend.mapper.vo.VoDayCount;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -53,4 +54,10 @@ public interface MapperHistoryDeviceAttribute {
             @Param("deviceCode") String deviceCode,
             @Param("attributeCode") String attributeCode
     );
+
+    @Select("select substring(create_dt,1,10) day,count(1) count from history_device_attribute " +
+            "where rel_user_info_id = #{relUserInfoId} " +
+            "group by day " +
+            "limit #{rows};")
+    List<VoDayCount> limitGroupCreateDtByUserInfoId(@Param("relUserInfoId") Long relUserInfoId, @Param("rows") int rows);
 }
