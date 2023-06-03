@@ -1,24 +1,20 @@
-package iot.cloud.backend.mapper.entity;
+package iot.cloud.backend.service.dto;
 
-import lombok.AllArgsConstructor;
+import iot.cloud.backend.common.base.BaseResDto;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * @author weichuang
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class EntityDeviceInfo implements Serializable {
+public class ResDtoPageDeviceInfo extends BaseResDto {
     private Long id;
     private Long relDeviceTypeId;
+    private String relDeviceTypeName;
     private Long relUserInfoId;
+    private String relUserInfoName;
     private String name;
     private String code;
-    private String pwd;
     private int onlineStatus;
     private int activeStatus;
     private int alarmStatus;

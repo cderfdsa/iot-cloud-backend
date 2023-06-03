@@ -31,6 +31,12 @@ public class ConnectAuthenticator implements SimpleAuthenticator {
             log.info("onConnect applicationContext=null,{},{},{}", clientId, username, password);
             return;
         }
+        //
+        if (SpringApplicationUtils.getApplicationContext() == null) {
+            simpleAuthOutput.failAuthentication();
+            log.info("onConnect applicationContext=null,{},{},{}", clientId, username, password);
+            return;
+        }
         if (clientId.startsWith("device:")) {
             String deviceCode = username;
             DeviceInfoService deviceInfoService = SpringApplicationUtils.getApplicationContext().getBean(DeviceInfoService.class);

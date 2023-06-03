@@ -71,5 +71,30 @@ public interface MapperDeviceInfo {
             "where rel_user_info_id = #{relUserInfoId} and alarm_status  = 1")
     List<Integer> countManyStatus(@Param("relUserInfoId") Long relUserInfoId);
 
+    @Select("<script>" +
+            "select count(1) " +
+            "from device_info where rel_user_info_id=#{relUserInfoId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%')  or code like concat('%', #{searchKey}, '%') ) " +
+            "   </when>" +
+            "</choose>" +
+            "</script>"
+    )
+    Long limitTotal(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey);
+
+    @Select("<script>" +
+            "select id, rel_device_type_id relDeviceTypeId, rel_user_info_id relUserInfoId, name, code, pwd, online_status onlineStatus, alarm_status alarmStatus, active_status activeStatus " +
+            "from device_info where rel_user_info_id=#{relUserInfoId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%')  or code like concat('%', #{searchKey}, '%') ) " +
+            "   </when>" +
+            "</choose> " +
+            "limit #{offset},#{rows}" +
+            "</script>"
+    )
+    List<EntityDeviceInfo> limit(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
+
 
 }

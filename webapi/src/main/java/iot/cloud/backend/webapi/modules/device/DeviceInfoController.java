@@ -49,8 +49,8 @@ public class DeviceInfoController {
     }
 
     @PostMapping(value = "/page")
-    public ResResult<PageInfo<ResDtoPageDeviceType>> page(@RequestBody ReqDtoPageDeviceType reqDtoPageDeviceType) {
-        return deviceTypeService.page(reqDtoPageDeviceType);
+    public ResResult<PageInfo<ResDtoPageDeviceInfo>> page(@RequestBody ReqDtoPageDeviceInfo reqDtoPageDeviceInfo) {
+        return deviceInfoService.page(reqDtoPageDeviceInfo);
     }
 
 

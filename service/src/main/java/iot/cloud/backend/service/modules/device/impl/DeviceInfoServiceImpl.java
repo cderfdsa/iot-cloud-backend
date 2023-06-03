@@ -1,5 +1,6 @@
 package iot.cloud.backend.service.modules.device.impl;
 
+import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.common.utils.RandomStringUtils;
 import iot.cloud.backend.mapper.entity.EntityDeviceInfo;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceInfo;
@@ -96,5 +97,34 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
     @Override
     public ResResult<List<Integer>> statisticsManyDeviceStatus() {
         return new ResResult<>(mapperDeviceInfo.countManyStatus(UserUtils.getCurrentRequestUserId()));
+    }
+
+    @Override
+    public ResResult<PageInfo<ResDtoPageDeviceInfo>> page(ReqDtoPageDeviceInfo reqDtoPageDeviceInfo) {
+        //
+        ResResult<PageInfo<ResDtoPageDeviceInfo>> resResult = new ResResult<>();
+        PageInfo<ResDtoPageDeviceInfo> pageInfo = new PageInfo<>();
+        pageInfo.setOffset(reqDtoPageDeviceInfo.getOffset());
+        pageInfo.setRows(reqDtoPageDeviceInfo.getRows());
+        resResult.setData(pageInfo);
+        //
+        List<ResDtoPageDeviceInfo> list = new ArrayList<>();
+        List<EntityDeviceInfo> listForEntity = mapperDeviceInfo.limit(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getSearchKey(), reqDtoPageDeviceInfo.getOffset(), reqDtoPageDeviceInfo.getRows());
+        pageInfo.setTotal(mapperDeviceInfo.limitTotal(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getSearchKey()));
+        listForEntity.stream().forEach((entityDeviceInfo) -> {
+            ResDtoPageDeviceInfo resDtoPageDeviceInfo = new ResDtoPageDeviceInfo();
+            resDtoPageDeviceInfo.setId(entityDeviceInfo.getId());
+            resDtoPageDeviceInfo.setRelUserInfoId(entityDeviceInfo.getRelUserInfoId());
+            resDtoPageDeviceInfo.setRelDeviceTypeId(entityDeviceInfo.getRelDeviceTypeId());
+            resDtoPageDeviceInfo.setName(entityDeviceInfo.getName());
+            resDtoPageDeviceInfo.setCode(entityDeviceInfo.getCode());
+            resDtoPageDeviceInfo.setOnlineStatus(entityDeviceInfo.getOnlineStatus());
+            resDtoPageDeviceInfo.setActiveStatus(entityDeviceInfo.getActiveStatus());
+            resDtoPageDeviceInfo.setAlarmStatus(entityDeviceInfo.getAlarmStatus());
+            list.add(resDtoPageDeviceInfo);
+        });
+        pageInfo.setList(list);
+        //
+        return resResult;
     }
 }

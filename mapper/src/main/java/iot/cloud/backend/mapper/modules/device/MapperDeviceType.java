@@ -37,11 +37,30 @@ public interface MapperDeviceType {
             "from device_type where id=#{id}")
     EntityDeviceType selectById(@Param("id") Long id);
 
-    @Select("select count(1) " +
-            "from device_type where name like '%#{nameKey}%'")
-    Long limitTotal(@Param("nameKey") String nameKey);
+    @Select("<script>" +
+            "select count(1) " +
+            "from device_type where rel_user_info_id=#{relUserInfoId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%')) " +
+            "   </when>" +
+            "</choose>" +
+            "</script>"
+    )
+    Long limitTotal(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey);
 
-    @Select("select id,rel_user_info_id,name,type,communication_type,protocol_type,protocol_format " +
-            "from device_type where name like '%#{nameKey}%' limit #{offset},#{rows}")
-    List<EntityDeviceType> limit(@Param("nameKey") String nameKey, @Param("offset") Long offset, @Param("rows") int rows);
+
+    @Select("<script>" +
+            "select id, name, `type`, communication_type communicationType, protocol_type protocolType, protocol_format protocolFormat, rel_user_info_id relUserInfoId, bus_time_value busTimeValue, bus_time_unit busTimeUnit " +
+            "from device_type where rel_user_info_id=#{relUserInfoId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%')  ) " +
+            "   </when>" +
+            "</choose> " +
+            "order by id desc " +
+            "limit #{offset},#{rows}" +
+            "</script>"
+    )
+    List<EntityDeviceType> limit(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
 }

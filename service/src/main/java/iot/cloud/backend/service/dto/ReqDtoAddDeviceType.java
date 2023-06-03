@@ -19,4 +19,8 @@ public class ReqDtoAddDeviceType {
     private int protocolType;
     @Range(min = 100, max = 400)
     private int protocolFormat;
+    @Range(min = 1, max = 100)
+    private int busTimeValue;
+    @NotEmpty
+    private String busTimeUnit;
 }

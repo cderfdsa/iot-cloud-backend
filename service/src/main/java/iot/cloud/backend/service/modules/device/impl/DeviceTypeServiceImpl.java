@@ -6,6 +6,7 @@ import iot.cloud.backend.mapper.modules.device.MapperDeviceType;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeService;
 import iot.cloud.backend.service.result.ResResult;
+import iot.cloud.backend.service.utils.UserUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         entityDeviceType.setCommunicationType(reqDtoAddDeviceType.getCommunicationType());
         entityDeviceType.setProtocolType(reqDtoAddDeviceType.getProtocolType());
         entityDeviceType.setProtocolFormat(reqDtoAddDeviceType.getProtocolFormat());
+        if (reqDtoAddDeviceType.getProtocolType() == 2) {
+            entityDeviceType.setBusTimeUnit(reqDtoAddDeviceType.getBusTimeUnit().toCharArray()[0]);
+            entityDeviceType.setBusTimeValue(reqDtoAddDeviceType.getBusTimeValue());
+        }
+        entityDeviceType.setRelUserInfoId(UserUtils.getCurrentRequestUserId());
         //
         mapperDeviceType.insert(entityDeviceType);
         resDtoAdd.setId(entityDeviceType.getId());
@@ -102,8 +108,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         resResult.setData(pageInfo);
         //
         List<ResDtoPageDeviceType> list = new ArrayList<>();
-        List<EntityDeviceType> listForEntity = mapperDeviceType.limit(reqDtoPageDeviceType.getNameKey(), reqDtoPageDeviceType.getOffset(), reqDtoPageDeviceType.getRows());
-        pageInfo.setTotal(mapperDeviceType.limitTotal(reqDtoPageDeviceType.getNameKey()));
+        List<EntityDeviceType> listForEntity = mapperDeviceType.limit(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceType.getSearchKey(), reqDtoPageDeviceType.getOffset(), reqDtoPageDeviceType.getRows());
+        pageInfo.setTotal(mapperDeviceType.limitTotal(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceType.getSearchKey()));
         listForEntity.stream().forEach((entityDeviceType) -> {
             ResDtoPageDeviceType resDtoPageDeviceType = new ResDtoPageDeviceType();
             resDtoPageDeviceType.setId(entityDeviceType.getId());
@@ -112,6 +118,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
             resDtoPageDeviceType.setCommunicationType(entityDeviceType.getCommunicationType());
             resDtoPageDeviceType.setProtocolType(entityDeviceType.getProtocolType());
             resDtoPageDeviceType.setProtocolFormat(entityDeviceType.getProtocolFormat());
+            resDtoPageDeviceType.setBusTimeValue(entityDeviceType.getBusTimeValue());
+            resDtoPageDeviceType.setBusTimeUnit(entityDeviceType.getBusTimeUnit());
             list.add(resDtoPageDeviceType);
         });
         pageInfo.setList(list);

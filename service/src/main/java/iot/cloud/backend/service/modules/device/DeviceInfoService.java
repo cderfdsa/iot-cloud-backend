@@ -1,5 +1,6 @@
 package iot.cloud.backend.service.modules.device;
 
+import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.result.ResResult;
 
@@ -20,4 +21,6 @@ public interface DeviceInfoService {
     String getAccountByDeviceCode(String deviceCode);
 
     ResResult<List<Integer>> statisticsManyDeviceStatus();
+
+    ResResult<PageInfo<ResDtoPageDeviceInfo>> page(ReqDtoPageDeviceInfo reqDtoPageDeviceInfo);
 }
