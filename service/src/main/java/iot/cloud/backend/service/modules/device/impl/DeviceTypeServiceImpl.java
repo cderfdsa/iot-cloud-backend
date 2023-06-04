@@ -35,7 +35,7 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         entityDeviceType.setProtocolType(reqDtoAddDeviceType.getProtocolType());
         entityDeviceType.setProtocolFormat(reqDtoAddDeviceType.getProtocolFormat());
         if (reqDtoAddDeviceType.getProtocolType() == 2) {
-            entityDeviceType.setBusTimeUnit(reqDtoAddDeviceType.getBusTimeUnit().toCharArray()[0]);
+            entityDeviceType.setBusTimeUnit(reqDtoAddDeviceType.getBusTimeUnit());
             entityDeviceType.setBusTimeValue(reqDtoAddDeviceType.getBusTimeValue());
         }
         entityDeviceType.setRelUserInfoId(UserUtils.getCurrentRequestUserId());
@@ -94,6 +94,8 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         resDtoGetDeviceType.setCommunicationType(entityDeviceType.getCommunicationType());
         resDtoGetDeviceType.setProtocolType(entityDeviceType.getProtocolType());
         resDtoGetDeviceType.setProtocolFormat(entityDeviceType.getProtocolFormat());
+        resDtoGetDeviceType.setBusTimeUnit(entityDeviceType.getBusTimeUnit() + "");
+        resDtoGetDeviceType.setBusTimeValue(entityDeviceType.getBusTimeValue());
         //
         return resResult;
     }

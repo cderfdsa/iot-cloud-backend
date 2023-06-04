@@ -1,5 +1,6 @@
 package iot.cloud.backend.service.modules.device.impl;
 
+import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttribute;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceTypeAttribute;
 import iot.cloud.backend.service.dto.*;
@@ -7,6 +8,9 @@ import iot.cloud.backend.service.modules.device.DeviceTypeAttributeService;
 import iot.cloud.backend.service.result.ResResult;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author weichuang
@@ -49,5 +53,32 @@ public class DeviceTypeAttributeServiceImpl implements DeviceTypeAttributeServic
     @Override
     public ResResult<ResDtoGetDeviceTypeAttribute> get(ReqDtoGetDeviceTypeAttribute reqDtoGetDeviceTypeAttribute) {
         return null;
+    }
+
+    @Override
+    public ResResult<PageInfo<ResDtoPageDeviceTypeAttribute>> page(ReqDtoPageDeviceTypeAttribute reqDtoPageDeviceTypeAttribute) {
+        //
+        ResResult<PageInfo<ResDtoPageDeviceTypeAttribute>> resResult = new ResResult<>();
+        PageInfo<ResDtoPageDeviceTypeAttribute> pageInfo = new PageInfo<>();
+        pageInfo.setOffset(reqDtoPageDeviceTypeAttribute.getOffset());
+        pageInfo.setRows(reqDtoPageDeviceTypeAttribute.getRows());
+        resResult.setData(pageInfo);
+        //
+        List<ResDtoPageDeviceTypeAttribute> list = new ArrayList<>();
+        List<EntityDeviceTypeAttribute> listForEntity = mapperDeviceTypeAttribute.limit(reqDtoPageDeviceTypeAttribute.getRelDeviceTypeId(), reqDtoPageDeviceTypeAttribute.getSearchKey(), reqDtoPageDeviceTypeAttribute.getOffset(), reqDtoPageDeviceTypeAttribute.getRows());
+        pageInfo.setTotal(mapperDeviceTypeAttribute.limitTotal(reqDtoPageDeviceTypeAttribute.getRelDeviceTypeId(), reqDtoPageDeviceTypeAttribute.getSearchKey()));
+        listForEntity.stream().forEach((entityDeviceTypeAttribute) -> {
+            ResDtoPageDeviceTypeAttribute resDtoPageDeviceTypeAttribute = new ResDtoPageDeviceTypeAttribute();
+            resDtoPageDeviceTypeAttribute.setId(entityDeviceTypeAttribute.getId());
+            resDtoPageDeviceTypeAttribute.setRelDeviceTypeId(entityDeviceTypeAttribute.getRelDeviceTypeId());
+            resDtoPageDeviceTypeAttribute.setName(entityDeviceTypeAttribute.getName());
+            resDtoPageDeviceTypeAttribute.setCode(entityDeviceTypeAttribute.getCode());
+            resDtoPageDeviceTypeAttribute.setType(entityDeviceTypeAttribute.getType());
+            resDtoPageDeviceTypeAttribute.setDataType(entityDeviceTypeAttribute.getDataType());
+            list.add(resDtoPageDeviceTypeAttribute);
+        });
+        pageInfo.setList(list);
+        //
+        return resResult;
     }
 }

@@ -33,7 +33,7 @@ public interface MapperDeviceType {
             "where id=#{obj.id}")
     int update(@Param("obj") EntityDeviceType entityDeviceType);
 
-    @Select("select id,rel_user_info_id,name,type,communication_type,protocol_type,protocol_format " +
+    @Select("select id,rel_user_info_id relUserInfoId,name,type,communication_type communicationType,protocol_type protocolType,protocol_format protocolFormat, bus_time_value busTimeValue, bus_time_unit busTimeUnit " +
             "from device_type where id=#{id}")
     EntityDeviceType selectById(@Param("id") Long id);
 

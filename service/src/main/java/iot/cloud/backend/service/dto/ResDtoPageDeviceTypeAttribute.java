@@ -7,13 +7,11 @@ import lombok.Data;
  * @author weichuang
  */
 @Data
-public class ResDtoGetDeviceType extends BaseResDto {
+public class ResDtoPageDeviceTypeAttribute extends BaseResDto {
     private Long id;
+    private Long relDeviceTypeId;
     private String name;
+    private String code;
     private int type;
-    private int communicationType;
-    private int protocolType;
-    private int protocolFormat;
-    private int busTimeValue;
-    private String busTimeUnit;
+    private int dataType;
 }

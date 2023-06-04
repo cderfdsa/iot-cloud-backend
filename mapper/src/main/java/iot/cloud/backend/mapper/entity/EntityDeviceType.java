@@ -21,6 +21,6 @@ public class EntityDeviceType implements Serializable {
     private int protocolType;
     private int protocolFormat;
     private int busTimeValue;
-    private char busTimeUnit;
+    private String busTimeUnit;
 
 }

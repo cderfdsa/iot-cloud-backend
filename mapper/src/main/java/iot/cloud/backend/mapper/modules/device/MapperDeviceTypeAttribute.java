@@ -4,6 +4,8 @@ import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttribute;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author weichuang
  */
@@ -32,4 +34,31 @@ public interface MapperDeviceTypeAttribute {
     @Select("select id,rel_device_type_id,name,code,type,data_type " +
             "from device_type_attribute where id=#{id}")
     EntityDeviceTypeAttribute selectById(@Param("id") Long id);
+
+    @Select("<script>" +
+            "select count(1) " +
+            "from device_type_attribute where rel_device_type_id=#{relDeviceTypeId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%') or code like concat('%', #{searchKey}, '%') ) " +
+            "   </when>" +
+            "</choose>" +
+            "</script>"
+    )
+    Long limitTotal(@Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey);
+
+
+    @Select("<script>" +
+            "select id, rel_device_type_id relDeviceTypeId, name, code, `type`, data_type dataType " +
+            "from device_type_attribute where rel_device_type_id=#{relDeviceTypeId} " +
+            "<choose> " +
+            "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
+            "   and (name like concat('%', #{searchKey}, '%') or code like concat('%', #{searchKey}, '%') ) " +
+            "   </when>" +
+            "</choose> " +
+            "order by id desc " +
+            "limit #{offset},#{rows}" +
+            "</script>"
+    )
+    List<EntityDeviceTypeAttribute> limit(@Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
 }
