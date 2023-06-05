@@ -87,6 +87,9 @@ public class DeviceTypeAttributeServiceImpl implements DeviceTypeAttributeServic
 
     @Override
     public Map<Long, String> getIdNamesByIds(List<Long> ids) {
+        if (ids.size() == 0) {
+            return new HashMap<>();
+        }
         List<VoIdName> voIdNameList = mapperDeviceTypeAttribute.selectIdNamesByIds(ids);
         Map<Long, String> retMap = new HashMap<>();
         for (VoIdName voIdName : voIdNameList) {
