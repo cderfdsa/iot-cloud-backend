@@ -78,10 +78,13 @@ public interface MapperDeviceInfo {
             "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
             "   and (name like concat('%', #{searchKey}, '%')  or code like concat('%', #{searchKey}, '%') ) " +
             "   </when>" +
-            "</choose>" +
+            "   <when test=' relDeviceTypeId != null and relDeviceTypeId != 0 '> " +
+            "   and rel_device_type_id = #{relDeviceTypeId} " +
+            "   </when>" +
+            "</choose> " +
             "</script>"
     )
-    Long limitTotal(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey);
+    Long limitTotal(@Param("relUserInfoId") Long relUserInfoId, @Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey);
 
     @Select("<script>" +
             "select id, rel_device_type_id relDeviceTypeId, rel_user_info_id relUserInfoId, name, code, pwd, online_status onlineStatus, alarm_status alarmStatus, active_status activeStatus " +
@@ -90,11 +93,14 @@ public interface MapperDeviceInfo {
             "   <when test='searchKey != null and searchKey != &apos;&apos;'> " +
             "   and (name like concat('%', #{searchKey}, '%')  or code like concat('%', #{searchKey}, '%') ) " +
             "   </when>" +
+            "   <when test=' relDeviceTypeId != null and relDeviceTypeId != 0 '> " +
+            "   and rel_device_type_id = #{relDeviceTypeId} " +
+            "   </when>" +
             "</choose> " +
             "limit #{offset},#{rows}" +
             "</script>"
     )
-    List<EntityDeviceInfo> limit(@Param("relUserInfoId") Long relUserInfoId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
+    List<EntityDeviceInfo> limit(@Param("relUserInfoId") Long relUserInfoId, @Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
 
 
 }

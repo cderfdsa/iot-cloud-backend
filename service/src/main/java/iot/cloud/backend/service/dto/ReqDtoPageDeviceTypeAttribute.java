@@ -11,4 +11,10 @@ public class ReqDtoPageDeviceTypeAttribute extends ReqDtoPage {
     @NotBlank
     private Long relDeviceTypeId;
     private String searchKey;
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey.replaceAll("%", "\\\\%")
+                .replaceAll("_", "\\\\_");
+        ;
+    }
 }

@@ -8,4 +8,10 @@ import lombok.Data;
 @Data
 public class ReqDtoPageDeviceType extends ReqDtoPage {
     private String searchKey;
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey.replaceAll("%", "\\\\%")
+                .replaceAll("_", "\\\\_");
+        ;
+    }
 }

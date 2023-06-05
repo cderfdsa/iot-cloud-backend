@@ -3,6 +3,7 @@ package iot.cloud.backend.service.modules.device.impl;
 import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttribute;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceTypeAttribute;
+import iot.cloud.backend.mapper.vo.VoIdName;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeAttributeService;
 import iot.cloud.backend.service.result.ResResult;
@@ -10,7 +11,9 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author weichuang
@@ -80,5 +83,15 @@ public class DeviceTypeAttributeServiceImpl implements DeviceTypeAttributeServic
         pageInfo.setList(list);
         //
         return resResult;
+    }
+
+    @Override
+    public Map<Long, String> getIdNamesByIds(List<Long> ids) {
+        List<VoIdName> voIdNameList = mapperDeviceTypeAttribute.selectIdNamesByIds(ids);
+        Map<Long, String> retMap = new HashMap<>();
+        for (VoIdName voIdName : voIdNameList) {
+            retMap.put(voIdName.getId(), voIdName.getName());
+        }
+        return retMap;
     }
 }

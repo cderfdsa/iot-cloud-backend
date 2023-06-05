@@ -101,4 +101,9 @@ public class DeviceTypeController {
     public ResResult<ResDtoGetDeviceTypeAttributeModbus> getAttributesModbus(@RequestBody ReqDtoGetDeviceTypeAttributeModbus reqDtoGetDeviceTypeAttributeModbus) {
         return deviceTypeAttributeModbusService.get(reqDtoGetDeviceTypeAttributeModbus);
     }
+
+    @PostMapping(value = "/attribute/modbus/page")
+    public ResResult<PageInfo<ResDtoPageDeviceTypeAttributeModbus>> page(@RequestBody ReqDtoPageDeviceTypeAttributeModbus reqDtoPageDeviceTypeAttributeModbus) {
+        return deviceTypeAttributeModbusService.page(reqDtoPageDeviceTypeAttributeModbus);
+    }
 }

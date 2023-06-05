@@ -1,14 +1,15 @@
 package iot.cloud.backend.service.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import java.util.Optional;
 
 /**
  * @author weichuang
  */
 @Data
-public class ReqDtoPageDeviceInfo extends ReqDtoPage {
+public class ReqDtoPageDeviceTypeAttributeModbus extends ReqDtoPage {
+    @NotBlank
+    private Long relDeviceTypeId;
     private String searchKey;
 
     public void setSearchKey(String searchKey) {
@@ -16,6 +17,4 @@ public class ReqDtoPageDeviceInfo extends ReqDtoPage {
                 .replaceAll("_", "\\\\_");
         ;
     }
-
-    private Optional<Long> relDeviceTypeId = Optional.empty();
 }

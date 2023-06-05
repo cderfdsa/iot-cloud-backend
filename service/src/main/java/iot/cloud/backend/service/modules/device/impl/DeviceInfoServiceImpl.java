@@ -109,8 +109,8 @@ public class DeviceInfoServiceImpl implements DeviceInfoService {
         resResult.setData(pageInfo);
         //
         List<ResDtoPageDeviceInfo> list = new ArrayList<>();
-        List<EntityDeviceInfo> listForEntity = mapperDeviceInfo.limit(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getSearchKey(), reqDtoPageDeviceInfo.getOffset(), reqDtoPageDeviceInfo.getRows());
-        pageInfo.setTotal(mapperDeviceInfo.limitTotal(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getSearchKey()));
+        List<EntityDeviceInfo> listForEntity = mapperDeviceInfo.limit(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getRelDeviceTypeId().orElse(null), reqDtoPageDeviceInfo.getSearchKey(), reqDtoPageDeviceInfo.getOffset(), reqDtoPageDeviceInfo.getRows());
+        pageInfo.setTotal(mapperDeviceInfo.limitTotal(UserUtils.getCurrentRequestUserId(), reqDtoPageDeviceInfo.getRelDeviceTypeId().orElse(null), reqDtoPageDeviceInfo.getSearchKey()));
         listForEntity.stream().forEach((entityDeviceInfo) -> {
             ResDtoPageDeviceInfo resDtoPageDeviceInfo = new ResDtoPageDeviceInfo();
             resDtoPageDeviceInfo.setId(entityDeviceInfo.getId());

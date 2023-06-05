@@ -1,6 +1,7 @@
 package iot.cloud.backend.mapper.modules.device;
 
 import iot.cloud.backend.mapper.entity.EntityDeviceTypeAttribute;
+import iot.cloud.backend.mapper.vo.VoIdName;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -61,4 +62,13 @@ public interface MapperDeviceTypeAttribute {
             "</script>"
     )
     List<EntityDeviceTypeAttribute> limit(@Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
+
+    @Select("<script>" +
+            "select id,name from device_type_attribute where id in" +
+            "<foreach collection='ids' item='item' open='(' separator=',' close=')'> " +
+            "#{item} " +
+            "</foreach> " +
+            "</script> "
+    )
+    List<VoIdName> selectIdNamesByIds(@Param("ids") List<Long> ids);
 }

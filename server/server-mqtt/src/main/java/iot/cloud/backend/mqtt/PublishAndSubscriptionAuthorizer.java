@@ -28,7 +28,8 @@ public class PublishAndSubscriptionAuthorizer implements PublishAuthorizer, Subs
                 publishAuthorizerOutput.failAuthorization();
             }
         } else if (clientId.startsWith("account:") && topic.endsWith("/u")) {
-            String username = clientId.substring(8);
+            String[] clientIdArr = clientId.split(":");
+            String username = clientIdArr[1];
             if (topic.startsWith("/account/" + username + "/")) {
                 publishAuthorizerOutput.authorizeSuccessfully();
             } else {
@@ -57,7 +58,8 @@ public class PublishAndSubscriptionAuthorizer implements PublishAuthorizer, Subs
                 subscriptionAuthorizerOutput.failAuthorization();
             }
         } else if (clientId.startsWith("account:") && topic.endsWith("/d")) {
-            String username = clientId.substring(8);
+            String[] clientIdArr = clientId.split(":");
+            String username = clientIdArr[1];
             if (topic.startsWith("/account/" + username + "/")) {
                 subscriptionAuthorizerOutput.authorizeSuccessfully();
             } else {
