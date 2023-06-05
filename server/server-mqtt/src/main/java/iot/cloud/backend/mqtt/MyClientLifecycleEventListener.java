@@ -76,7 +76,7 @@ public class MyClientLifecycleEventListener implements ClientLifecycleEventListe
         DeviceInfoService deviceInfoService = SpringApplicationUtils.getBean(DeviceInfoService.class);
         String account = deviceInfoService.getAccountByDeviceCode(deviceCode);
         MqttSendService mqttSendService = SpringApplicationUtils.getBean(MqttSendService.class);
-        mqttSendService.sendToAccountOnline(account, JSONObject.of(deviceCode, onOrOff).toString());
+        mqttSendService.sendToAccountOnline(account, JSONObject.of("deviceCode", deviceCode, "onOrOff", onOrOff).toString());
     }
 
     private void addHistoryDeviceOnOrOffline(String deviceCode, Integer onOrOff) {
