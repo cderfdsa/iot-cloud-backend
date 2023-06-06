@@ -2,6 +2,7 @@ package iot.cloud.backend.service.modules.device.impl;
 
 import iot.cloud.backend.common.base.PageInfo;
 import iot.cloud.backend.mapper.entity.EntityDeviceType;
+import iot.cloud.backend.mapper.modules.device.MapperDeviceInfo;
 import iot.cloud.backend.mapper.modules.device.MapperDeviceType;
 import iot.cloud.backend.service.dto.*;
 import iot.cloud.backend.service.modules.device.DeviceTypeService;
@@ -20,6 +21,8 @@ import java.util.List;
 public class DeviceTypeServiceImpl implements DeviceTypeService {
     @Resource
     private MapperDeviceType mapperDeviceType;
+    @Resource
+    private MapperDeviceInfo mapperDeviceInfo;
 
     @Override
     public ResResult<ResDtoAdd> add(ReqDtoAddDeviceType reqDtoAddDeviceType) {
@@ -60,9 +63,27 @@ public class DeviceTypeServiceImpl implements DeviceTypeService {
         entityDeviceType.setCommunicationType(reqDtoEditDeviceType.getCommunicationType());
         entityDeviceType.setProtocolType(reqDtoEditDeviceType.getProtocolType());
         entityDeviceType.setProtocolFormat(reqDtoEditDeviceType.getProtocolFormat());
+        if (reqDtoEditDeviceType.getProtocolType() == 2) {
+            entityDeviceType.setBusTimeUnit(reqDtoEditDeviceType.getBusTimeUnit());
+            entityDeviceType.setBusTimeValue(reqDtoEditDeviceType.getBusTimeValue());
+        }
         //
-        mapperDeviceType.insert(entityDeviceType);
+        mapperDeviceType.update(entityDeviceType);
         resDtoEdit.setId(entityDeviceType.getId());
+        //
+        return resResult;
+    }
+
+    @Override
+    public ResResult<ResDtoCanRemove> canRemove(ReqDtoCanRemove reqDtoCanRemove) {
+        //
+        ResResult<ResDtoCanRemove> resResult = new ResResult<>();
+        ResDtoCanRemove resDtoCanRemove = new ResDtoCanRemove();
+        resResult.setData(resDtoCanRemove);
+        //
+        Long count = mapperDeviceInfo.countByDeviceTypeId(UserUtils.getCurrentRequestUserId(), reqDtoCanRemove.getId());
+        resDtoCanRemove.setId(reqDtoCanRemove.getId());
+        resDtoCanRemove.setOk(count > 0 ? 2 : 1);
         //
         return resResult;
     }

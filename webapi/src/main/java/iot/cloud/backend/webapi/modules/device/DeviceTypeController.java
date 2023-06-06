@@ -41,6 +41,11 @@ public class DeviceTypeController {
         return deviceTypeService.edit(reqDtoEditDeviceType);
     }
 
+    @PostMapping(value = "/canRemove")
+    public ResResult<ResDtoCanRemove> canRemove(@RequestBody ReqDtoCanRemove reqDtoCanRemove) {
+        return deviceTypeService.canRemove(reqDtoCanRemove);
+    }
+
     @PostMapping(value = "/remove")
     public ResResult<ResDtoRemove> remove(@RequestBody ReqDtoRemove reqDtoRemove) {
         return deviceTypeService.remove(reqDtoRemove);

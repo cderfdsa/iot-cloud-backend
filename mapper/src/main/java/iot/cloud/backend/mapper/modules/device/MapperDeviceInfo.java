@@ -102,5 +102,15 @@ public interface MapperDeviceInfo {
     )
     List<EntityDeviceInfo> limit(@Param("relUserInfoId") Long relUserInfoId, @Param("relDeviceTypeId") Long relDeviceTypeId, @Param("searchKey") String searchKey, @Param("offset") Long offset, @Param("rows") int rows);
 
-
+    @Select("<script>" +
+            "select count(1) " +
+            "from device_info where rel_user_info_id=#{relUserInfoId} " +
+            "<choose> " +
+            "   <when test=' relDeviceTypeId != null and relDeviceTypeId != 0 '> " +
+            "   and rel_device_type_id = #{relDeviceTypeId} " +
+            "   </when>" +
+            "</choose> " +
+            "</script>"
+    )
+    Long countByDeviceTypeId(@Param("relUserInfoId") Long relUserInfoId, @Param("relDeviceTypeId") Long relDeviceTypeId);
 }

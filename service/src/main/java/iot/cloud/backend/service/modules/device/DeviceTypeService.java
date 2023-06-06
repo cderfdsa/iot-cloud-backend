@@ -15,6 +15,8 @@ public interface DeviceTypeService {
 
     ResResult<ResDtoRemove> remove(ReqDtoRemove reqDtoRemove);
 
+    ResResult<ResDtoCanRemove> canRemove(ReqDtoCanRemove reqDtoRemove);
+
     ResResult<ResDtoGetDeviceType> get(ReqDtoGetDeviceType reqDtoGetDeviceType);
 
     ResResult<PageInfo<ResDtoPageDeviceType>> page(ReqDtoPageDeviceType reqDtoPageDeviceType);

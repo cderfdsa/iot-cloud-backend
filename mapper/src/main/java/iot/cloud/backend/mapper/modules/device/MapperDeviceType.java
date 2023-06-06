@@ -29,13 +29,16 @@ public interface MapperDeviceType {
             "type=#{obj.type}," +
             "communication_type=#{obj.communicationType}," +
             "protocol_type=#{obj.protocolType}," +
-            "protocol_format=#{obj.protocolFormat} " +
+            "protocol_format=#{obj.protocolFormat} ," +
+            "bus_time_value=#{obj.busTimeValue} ," +
+            "bus_time_unit=#{obj.busTimeUnit} " +
             "where id=#{obj.id}")
     int update(@Param("obj") EntityDeviceType entityDeviceType);
 
     @Select("select id,rel_user_info_id relUserInfoId,name,type,communication_type communicationType,protocol_type protocolType,protocol_format protocolFormat, bus_time_value busTimeValue, bus_time_unit busTimeUnit " +
             "from device_type where id=#{id}")
     EntityDeviceType selectById(@Param("id") Long id);
+
 
     @Select("<script>" +
             "select count(1) " +
